@@ -1,12 +1,6 @@
-----------------------------------------------------------------------------
-Este é o arquivo README do projeto. Você deve descrever aqui o seu projeto.
-Informe ao usuário (alguém que não sabe nada sobre este projeto!) tudo que
-ele/ela precisa saber. Os comentários devem incluir, pelo menos:
-------------------------------------------------------------------------
-
-TÍTULO DO PROJETO:
-OBJETIVO DO PROJETO:
-VERSÃO ou DATA:
+TÍTULO DO PROJETO: Cadastro Aluno
+OBJETIVO DO PROJETO: Criar, por hernaça, classes e realizar o cadstro de alunos usando outras classes como NomePessoa
+VERSÃO ou DATA: 17/03/2026
 COMO INICIAR O PROJETO:
-AUTORES:
+AUTORES: Kauã Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Leite
 INSTRUÇÕES PARA O USUÁRIO:
