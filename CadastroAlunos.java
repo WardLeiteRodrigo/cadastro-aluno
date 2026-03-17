@@ -1,14 +1,10 @@
-
 /**
- * Escreva uma descrição da classe TesteArray aqui.
- * 
- * @author (seu nome) 
- * @version (um número da versão ou uma data)
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
+ * @version 17/03/2026
  */
-public class CadastroAlunos
-{
-    public static void main(String args[]){
-        
+
+public class CadastroAlunos {
+    public static void main(String args[]) {
         Aluno va[] = new Aluno[3];
         
         va[0] = new Aluno("Ana Claudia", 23, "RA1234561");
