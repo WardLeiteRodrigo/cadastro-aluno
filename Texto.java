@@ -1,33 +1,81 @@
-
 /**
- * Escreva uma descrição da classe Texto aqui.
+ * Armazena um texto. Inverte texto e limpa espaços extras
  * 
- * @author (seu nome) 
- * @version (um número da versão ou uma data)
+ * @author Julio Arakaki 
+ * @version 1.0 (19/03/2025)
  */
-public class Texto
-{
-    // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
-    private int x;
+public class Texto {
+    // Atributo da classe ou varáveis de instancia
+    private String txt;
 
-    /**
-     * Construtor para objetos da classe Texto
+    /** 
+     * Construtor: armazena o texto e limpa os espaços excedentes
+     * 
+     * @param txt String com o texto que será armazenado
      */
-    public Texto()
-    {
-        // inicializa variáveis de instância
-        x = 0;
+    Texto(String txt){
+        setTxt(txt);
+        limpaEspacosExcedentes();
+    }
+
+    // setters e getters
+    private void setTxt(String t){
+        this.txt = t;
+    }
+
+    public String getTxt(){
+        return this.txt;
     }
 
     /**
-     * Um exemplo de um método - substitua este comentário pelo seu próprio
-     * 
-     * @param  y   um exemplo de um parâmetro de método
-     * @return     a soma de x e y 
+     * Retorna um texto invertido
+     * @return txtInvertido String contendo o texto invertido
      */
-    public int sampleMethod(int y)
-    {
-        // escreva seu código aqui
-        return x + y;
+    public String inverterTexto(){
+        String txtInvertido = "";
+        if(!(this.txt == null || this.txt.equals("") )){
+            for (int i=this.txt.length()-1; i >= 0; i--){
+                txtInvertido = txtInvertido + this.txt.charAt(i);
+            }
+        } else {
+            return null;
+        }
+        return txtInvertido;
+    }
+
+    /**
+     * Retorna quantidade de palavras do nome
+     * @return qtd numero de palavras
+     */
+    public int getQtdePalavras(){
+        return (getTxt().split(" ").length);
+    }
+
+    /**
+     * Retira espacos excedentes de uma string
+     * @return s string sem espacos excedentes
+     */
+    private void limpaEspacosExcedentes(){
+        // Elimina espacos do inicio e fim da string
+        setTxt(this.txt.trim());
+
+        // Elimina espacos excedentes do meio da string
+        String s = "";
+        for (int i=0; i < this.txt.length(); i++){
+            s = s + this.txt.charAt(i); // pega o caractere da posicao
+            if(this.txt.charAt(i) == ' '){
+                while(this.txt.charAt(i+1) == ' '){ // avanca se tiver mais espacos
+                    i++;
+                }
+            }
+        }
+        setTxt(s);
+    }
+
+    /**
+     * Retorna os atributos como string
+     */
+    public String toString(){
+        return(getTxt());
     }
 }

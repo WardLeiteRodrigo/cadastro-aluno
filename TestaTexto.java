@@ -1,33 +1,28 @@
+import javax.swing.JOptionPane;
+//import java.util.Scanner;
 
 /**
- * Escreva uma descrição da classe TestaTexto aqui.
+ * Testa a classe Texto.
  * 
- * @author (seu nome) 
- * @version (um número da versão ou uma data)
+ * @author Julio Arakaki 
+ * @version 1.0 (19/03/2025)
  */
-public class TestaTexto
-{
-    // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
-    private int x;
+public class TestaTexto {
+    public static void main(String[] args) {
+        // cria objeto para entrada pelo teclado (standard input) 
+        //Scanner sc = new Scanner(System.in); 
+  
+        //System.out.println("Forneca um texto: ");
+        //String texto = sc.nextLine(); 
+         
+        // Entrada de um nome (atraves do teclado)
+        String texto = JOptionPane.showInputDialog("Forneça um texto: ");
 
-    /**
-     * Construtor para objetos da classe TestaTexto
-     */
-    public TestaTexto()
-    {
-        // inicializa variáveis de instância
-        x = 0;
-    }
+        // Criacao de uma instancia da classe nome (criacao do objeto)
+        Texto txt = new Texto(texto); // Chama o metodo construtor com o texto fornecido
 
-    /**
-     * Um exemplo de um método - substitua este comentário pelo seu próprio
-     * 
-     * @param  y   um exemplo de um parâmetro de método
-     * @return     a soma de x e y 
-     */
-    public int sampleMethod(int y)
-    {
-        // escreva seu código aqui
-        return x + y;
+        // Mostra os dados
+        System.out.println("Texto              : " + txt.getTxt() + " (" + txt.getQtdePalavras()+ " palavras)");
+        System.out.println("Texto invertido    : " + txt.inverterTexto());
     }
 }

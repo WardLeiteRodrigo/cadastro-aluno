@@ -1,33 +1,93 @@
-
 /**
- * Escreva uma descrição da classe NomePessoa aqui.
+ * Classe para armazenar o nome de uma pessoa. Possibilita inverter nome e limpar
+ * espaços extras (operaçoes herdados da classe pai).
+ * Retorna o nome da pessoa em formato de bibliografia
  * 
- * @author (seu nome) 
- * @version (um número da versão ou uma data)
+ * @author Julio Arakaki 
+ * @version 1.0 (19/03/2025)
  */
-public class NomePessoa
-{
-    // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
-    private int x;
+public class NomePessoa {
+    // Atributos
+    private Texto nome;
 
-    /**
-     * Construtor para objetos da classe NomePessoa
-     */
-    public NomePessoa()
-    {
-        // inicializa variáveis de instância
-        x = 0;
+    // Construtores
+    public NomePessoa(String nome){
+        setNome(nome);
     }
 
     /**
-     * Um exemplo de um método - substitua este comentário pelo seu próprio
-     * 
-     * @param  y   um exemplo de um parâmetro de método
-     * @return     a soma de x e y 
+     * @return the nome
      */
-    public int sampleMethod(int y)
-    {
-        // escreva seu código aqui
-        return x + y;
+    public String getNome() {
+        return this.nome.getTxt();
     }
+
+    /**
+     * @param nome the nome to set
+     */
+    protected void setNome(String nome) {
+        this.nome = new Texto(nome);
+    }
+
+    /**
+     * Retorna quantidade de palavras do nome
+     * @return qtd numero de palavras
+     */
+    public int getQtdePalavras(){
+        return this.nome.getQtdePalavras();
+    }
+    
+    /**
+     * Retorna nome invertido
+     * @return sInv nome invertido
+     */
+    public String getNomeInvertido(){
+        return this.nome.inverterTexto();
+    }
+
+    /**
+     * Retorna nome bibliografico
+     * @return sBib nome bibliografico
+     */
+    public String getNomeBiblio(){
+
+        // Separa as palavras
+        String vts[] = this.nome.getTxt().split(" ");
+        int qtd = vts.length;
+
+        String sBib = vts[qtd-1] + ", "; // ultimo nome + a virgula
+        // Monta o texto
+        for (int i=0; i < (qtd-1); i++){
+            String pal = vts[i].toLowerCase(); // pega palavra
+            if(!verificaStr(pal)){ // Se nao for preposicao concatena
+                sBib = sBib + vts[i].toUpperCase().charAt(0) + ". ";
+            }
+        }
+        return sBib;
+    }
+
+    /**
+     * Verifica se string eh uma "preposicao"
+     * @param s string a ser verificada
+     * @return true eh preposicao false nao eh preposicao
+     */
+    private boolean verificaStr(String s){
+        // Vetor de strings a serem retiradas
+        final String sRet[]={"da", "de", "do", "di", "das", "dos", "e",};
+
+        for (int i = 0; i < sRet.length; i++){
+            if(sRet[i].equals(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retorna os atributos como string
+     */
+    public String toString(){
+        return this.nome.toString();
+    }
+
 }

@@ -1,33 +1,22 @@
+import javax.swing.JOptionPane;
 
 /**
- * Escreva uma descrição da classe TestaNomePessoa aqui.
+ * Testa a classe NomePessoa.
  * 
- * @author (seu nome) 
- * @version (um número da versão ou uma data)
+ * @author Julio Arakaki
+ * @version 1.0 (19/03/2025)
  */
-public class TestaNomePessoa
-{
-    // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
-    private int x;
+public class TestaNomePessoa {
+    public static void main(String[] args) {
+        // Entrada de um nome (atraves do teclado)
+        String nomePessoa = JOptionPane.showInputDialog("Forneça um nome: ");
 
-    /**
-     * Construtor para objetos da classe TestaNomePessoa
-     */
-    public TestaNomePessoa()
-    {
-        // inicializa variáveis de instância
-        x = 0;
-    }
+        // Criacao de uma instancia da classe nome (criacao do objeto)
+        NomePessoa nome = new NomePessoa(nomePessoa); // Chama o metodo construtor com o texto fornecido
 
-    /**
-     * Um exemplo de um método - substitua este comentário pelo seu próprio
-     * 
-     * @param  y   um exemplo de um parâmetro de método
-     * @return     a soma de x e y 
-     */
-    public int sampleMethod(int y)
-    {
-        // escreva seu código aqui
-        return x + y;
+        // Mostra os dados
+        System.out.println("Nome              : " + nome.getNome() + " (" + nome.getQtdePalavras()+ " palavras)");
+        System.out.println("Nome invertido    : " + nome.getNomeInvertido());
+        System.out.println("Nome bibliografico: " + nome.getNomeBiblio());
     }
 }
