@@ -1,33 +1,21 @@
 
 /**
- * Escreva uma descrição da classe Aluno aqui.
+ * Escreva uma descrição da classe Pessoa aqui.
  * 
  * @author (seu nome) 
  * @version (um número da versão ou uma data)
  */
-public class Aluno
-{
-    // variáveis de instância - substitua o exemplo abaixo pelo seu próprio
-    private int x;
-
-    /**
-     * Construtor para objetos da classe Aluno
-     */
-    public Aluno()
-    {
-        // inicializa variáveis de instância
-        x = 0;
+public class Aluno extends Pessoa {
+    String ra;
+    
+    
+    public Aluno(String nome, int idade, String ra){
+        super(nome, idade);
+        this.ra = ra;
+        
     }
-
-    /**
-     * Um exemplo de um método - substitua este comentário pelo seu próprio
-     * 
-     * @param  y   um exemplo de um parâmetro de método
-     * @return     a soma de x e y 
-     */
-    public int sampleMethod(int y)
-    {
-        // escreva seu código aqui
-        return x + y;
+    
+    public String toString(){
+            return ("\nNome: " + nome + "\nIdade: " + idade + "\nRa: " + ra);
     }
 }
