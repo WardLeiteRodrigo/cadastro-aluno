@@ -1,6 +1,6 @@
 /**
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 17/03/2026
+ * @version 19/03/2026
  */
 
 public class Texto {
@@ -50,7 +50,7 @@ public class Texto {
         setTxt(s);
     }
 
-    public String toString(){
+    public String toString() {
         return(getTxt());
     }
 }

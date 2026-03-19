@@ -1,6 +1,6 @@
 /**
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 17/03/2026
+ * @version 19/03/2026
  */
 
 public class NomePessoa {
@@ -26,7 +26,7 @@ public class NomePessoa {
         return this.nome.inverterTexto();
     }
 
-    public String getNomeBiblio(){
+    public String getNomeBiblio() {
         String vts[] = this.nome.getTxt().split(" ");
         int qtd = vts.length;
 
@@ -51,7 +51,7 @@ public class NomePessoa {
         return false;
     }
 
-    public String toString(){
+    public String toString() {
         return this.nome.toString();
     }
 }
