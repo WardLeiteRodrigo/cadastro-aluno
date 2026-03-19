@@ -3,6 +3,7 @@
  * @version 19/03/2026
  */
 public class Armazenador implements IArmazenador {
+	// initialize Aluno vector 
     Aluno[] arm;
     
     Armazenador(int qtde) {
