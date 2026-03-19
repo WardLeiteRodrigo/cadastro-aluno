@@ -10,7 +10,21 @@ public class Armazenador implements IArmazenador {
     }
 
     public boolean inserir(Aluno a) {
-        // TODO
+        int i = 0;
+        int tam = arm.length;
+        boolean ctrl = false;
+        
+        while(ctrl != true && i < tam) {
+            
+            if(arm[i] == null) {
+                arm[i] = a;
+                ctrl = true;
+            }
+            
+            i++;
+        }
+        
+        
         return true;
     }
 
