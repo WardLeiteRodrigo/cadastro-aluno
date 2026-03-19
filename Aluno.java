@@ -17,4 +17,9 @@ public class Aluno extends Pessoa {
         this.curso = curso;
         this.semestre = semestre;
     }
+    
+    public String getRa() {
+        ra = this.ra;
+        return ra;
+    }
 }
