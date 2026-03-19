@@ -5,5 +5,7 @@
 public interface IArmazenador {
     public boolean inserir(Aluno a);
     
-    public boolean remover (String ra);
+    public boolean remover(String ra);
+    
+    public void listar();
 }

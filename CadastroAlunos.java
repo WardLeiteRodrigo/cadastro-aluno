@@ -4,12 +4,20 @@
  */
 public class CadastroAlunos {
     IArmazenador arm; 
+    
     CadastroAlunos (int qtde) {
         arm = new Armazenador(qtde);
     }
     
-    // inserir
-    // remover
-    // listar
+    public void inserir(Aluno a) {
+        arm.inserir(a);
+    }
     
+    public void remover(String ra) {
+        arm.remover(ra);
+    }
+    
+    public void listar() {
+        arm.listar();
+    }
 }

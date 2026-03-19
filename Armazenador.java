@@ -24,23 +24,18 @@ public class Armazenador implements IArmazenador {
             
             i++;
         }
-        
-        
         return true;
     }
 
     public boolean remover(String ra) {
-    	// itera sobre o armazenador
-    	for (int i = 0; i < arm.length; i++) {
-    		// checa se, p/ aquela posição, o aluno existe e se o RA é igual ao RA buscado.
-    		if (arm[i] != null && arm[i].getRa().equals(ra)) {
-    			// se for, atribui null
-    			arm[i] = null;
-    			// retorna true
-    			return true;
-    		}
-    	}
-    // retorna falso por padrão
-    return false;
+        return true;
+    }
+    
+    public void listar() {
+        for (int i = 0; i < arm.length; i++) {
+            if (arm[i] != null) {
+                System.out.printf("%s\n", arm[i].ra);
+            }
+        }
     }
 }
