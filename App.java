@@ -10,14 +10,27 @@ public class App {
 
         CadastroAlunos ca = new CadastroAlunos(qtde);
 
-        IMenu mn = new MenuGrafico(); 
-        //IMenu mn = new MenuTexto(); 
+        IMenu mn; 
+        int menu;
 
         String [] itensMenu = {"1 - inserir", "2 - remover", "3 - listar", "4 - sair"};
 
         int opcao = 0;
         
         do {
+            menu = Integer.parseInt(JOptionPane.showInputDialog("Qual o tipo de menu desejado? (Gráfico = 1 ou Texto = 2): "));
+            
+            if (menu != 1 && menu != 2) {
+                System.out.println("Valor inválido");
+                return;
+            }
+            
+            if (menu == 1) {
+                mn = new MenuGrafico();
+            } else {
+                mn = new MenuTexto(); 
+            }
+            
             opcao = mn.criarMenu(itensMenu);
             
             switch(opcao) {
