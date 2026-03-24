@@ -22,4 +22,12 @@ public class Aluno extends Pessoa {
         ra = this.ra;
         return ra;
     }
+    
+    public String getNomeBiblio() {
+        return super.getNomeBiblio();
+    }
+    
+    public String toString() {
+        return super.toString() + "\nra: " + ra + "\nCurso: " + curso + "\nSemestre: " + semestre;
+    }
 }
