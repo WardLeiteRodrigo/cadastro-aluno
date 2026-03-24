@@ -1,3 +1,7 @@
+/**
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
+ * @version 24/03/2026
+ */
 import java.util.Scanner;
 
 public class MenuTexto implements IMenu {
