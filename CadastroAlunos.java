@@ -21,7 +21,7 @@ public class CadastroAlunos {
         return arm.atualizar(ra, novoAluno);
     }
     
-    public void listar() {
-        arm.listar();
+    public void listar(boolean formatoBibliografico) {
+        arm.listar(formatoBibliografico);
     }
 }

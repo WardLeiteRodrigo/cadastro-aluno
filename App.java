@@ -124,7 +124,9 @@ public class App {
                     }
                     break;
                 case 3: 
-                    ca.listar();
+                    int tipoListagem = JOptionPane.showConfirmDialog(null, "Deseja listar no formato bibliografico?", "Formato de Listagem", JOptionPane.YES_NO_OPTION);
+                    boolean formatoBibliografico = (tipoListagem == JOptionPane.YES_OPTION);
+                    ca.listar(formatoBibliografico);
                     break; 
                 case 4:
                     // Mantido vazio apenas para não quebrar caso alguem digite 4 por engano

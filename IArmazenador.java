@@ -9,5 +9,5 @@ public interface IArmazenador {
     
     public boolean atualizar(String ra, Aluno novoAluno);
     
-    public void listar();
+    public void listar(boolean formatoBibliografico);
 }

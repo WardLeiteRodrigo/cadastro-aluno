@@ -58,10 +58,15 @@ public class Armazenador implements IArmazenador {
         return false;
     }
     
-    public void listar() {
+    public void listar(boolean formatoBibliografico) {
         for (int i = 0; i < arm.length; i++) {
             if (arm[i] != null) {
-                System.out.printf("%s\n", arm[i].ra);
+                if (formatoBibliografico) {
+                    System.out.println(arm[i].getNomeBiblio() + " - RA: " + arm[i].getRa() + " - Curso: " + arm[i].curso + " - Semestre: " + arm[i].semestre);
+                } else {
+                    System.out.println(arm[i].toString());
+                    System.out.println("-----------------------------");
+                }
             }
         }
     }
