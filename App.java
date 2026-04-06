@@ -1,10 +1,17 @@
 /**
+ * Classe principal do aplicativo que inicializa o sistema de cadastro e o menu.
+ * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
 import javax.swing.JOptionPane;
 
 public class App {
+    /**
+     * Metodo principal que executa o sistema.
+     * 
+     * @param args Argumentos de linha de comando.
+     */
     public static void main(String args[]) {
         int qtde = 0;
         boolean entradaValida = false;
