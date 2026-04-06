@@ -4,6 +4,8 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package model;
+
 public class Pessoa {
     private NomePessoa nome;
     private int idade;
@@ -14,7 +16,7 @@ public class Pessoa {
      * @param nome O nome da pessoa.
      * @param idade A idade da pessoa.
      */
-    Pessoa(String nome, int idade){
+    public Pessoa(String nome, int idade){
         this.nome = new NomePessoa(nome);
         this.idade = idade;
     }

@@ -4,10 +4,12 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package model;
+
 public class Aluno extends Pessoa {  
-    String ra;
-    String curso;
-    int semestre;
+    public String ra;
+    public String curso;
+    public int semestre;
 
     /**
      * Construtor para objetos da classe Aluno.
@@ -18,7 +20,7 @@ public class Aluno extends Pessoa {
      * @param curso O curso no qual o aluno esta matriculado.
      * @param semestre O semestre atual do aluno.
      */
-    Aluno(String nome, int idade, String ra, String curso, int semestre) {
+    public Aluno(String nome, int idade, String ra, String curso, int semestre) {
         super(nome, idade);
         
         this.ra = ra;

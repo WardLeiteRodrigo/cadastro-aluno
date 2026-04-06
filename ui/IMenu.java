@@ -4,6 +4,8 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package ui;
+
 public interface IMenu {
     /**
      * Cria e exibe um menu com as opcoes fornecidas, retornando a escolha do usuario.

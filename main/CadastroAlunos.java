@@ -4,6 +4,12 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package main;
+
+import model.Aluno;
+import storage.IArmazenador;
+import storage.Armazenador;
+
 public class CadastroAlunos {
     IArmazenador arm; 
     
@@ -12,7 +18,7 @@ public class CadastroAlunos {
      * 
      * @param qtde A capacidade de alunos a serem cadastrados.
      */
-    CadastroAlunos (int qtde) {
+    public CadastroAlunos (int qtde) {
         arm = new Armazenador(qtde);
     }
     

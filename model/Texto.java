@@ -4,6 +4,8 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package model;
+
 public class Texto {
     private String txt;
 
@@ -12,7 +14,7 @@ public class Texto {
      * 
      * @param txt O texto inicial.
      */
-    Texto(String txt) {
+    public Texto(String txt) {
         setTxt(txt);
         limpaEspacosExcedentes();
     }

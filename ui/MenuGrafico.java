@@ -1,14 +1,16 @@
 /**
- * Classe que implementa a interface IMenu fornecendo uma interface de texto via console.
+ * Classe que implementa a interface IMenu fornecendo uma interface grafica.
  * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
-import java.util.Scanner;
+package ui;
 
-public class MenuTexto implements IMenu {
+import javax.swing.JOptionPane;
+
+public class MenuGrafico implements IMenu {
     /**
-     * Cria um menu de texto lendo a entrada do console.
+     * Cria um menu grafico utilizando JOptionPane.
      * 
      * @param opcoes Array de strings com as opcoes do menu.
      * @return A opcao numerica escolhida pelo usuario.
@@ -19,26 +21,25 @@ public class MenuTexto implements IMenu {
         String itens = "";
         for (int i = 0; i < opcoes.length; i++){
             itens = itens + "\n" + opcoes[i];
-            
         }
         
         itens = itens + "\n\nSelecione a opcao: ";
-
-        Scanner sc = new Scanner(System.in);
         boolean entradaValida = false;
         opcao = 0;
-
+        
         do {
-            System.out.print(itens);
-            String s = sc.nextLine();
             try {
-                opcao = Integer.parseInt(s);
+                String input = JOptionPane.showInputDialog(itens);
+                if (input == null) {
+                    return 6; // Se o usuario cancelar, encerra o loop assumindo 'sair'
+                }
+                opcao = Integer.parseInt(input);
                 entradaValida = true;
             } catch (NumberFormatException e) {
-                System.out.println("\nEntrada invalida. Por favor, digite um numero valido.\n");
+                JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
             }
         } while (!entradaValida);
-
+        
         return opcao;
     }
 }

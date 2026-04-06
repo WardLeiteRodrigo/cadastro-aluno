@@ -4,6 +4,10 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package storage;
+
+import model.Aluno;
+
 public class Armazenador implements IArmazenador {
     Aluno[] arm;
     
@@ -12,7 +16,7 @@ public class Armazenador implements IArmazenador {
      * 
      * @param qtde A capacidade maxima de alunos no vetor.
      */
-    Armazenador(int qtde) {
+    public Armazenador(int qtde) {
         arm = new Aluno[qtde];
     }
 

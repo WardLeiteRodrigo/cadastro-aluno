@@ -4,6 +4,13 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package main;
+
+import model.Aluno;
+import ui.IMenu;
+import ui.MenuGrafico;
+import ui.MenuTexto;
+
 import javax.swing.JOptionPane;
 
 public class App {

@@ -4,6 +4,8 @@
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package model;
+
 public class NomePessoa {
     private Texto nome;
 
