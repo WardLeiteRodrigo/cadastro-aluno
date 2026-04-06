@@ -6,24 +6,49 @@ import javax.swing.JOptionPane;
 
 public class App {
     public static void main(String args[]) {
-        int qtde = Integer.parseInt(JOptionPane.showInputDialog("Forneça a quantidade de alunos: "));
+        int qtde = 0;
+        boolean entradaValida = false;
+        
+        do {
+            try {
+                String input = JOptionPane.showInputDialog("Forneça a quantidade de alunos: ");
+                if (input == null) return; // Encerra o programa se cancelar
+                qtde = Integer.parseInt(input);
+                if (qtde > 0) {
+                    entradaValida = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "A quantidade deve ser maior que zero.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
+            }
+        } while (!entradaValida);
 
         CadastroAlunos ca = new CadastroAlunos(qtde);
 
-        IMenu mn; 
-        int menu;
+        IMenu mn = null; 
+        int menu = 0;
 
         String [] itensMenu = {"1 - inserir", "2 - remover", "3 - listar", "4 - sair"};
 
         int opcao = 0;
         
         do {
-            menu = Integer.parseInt(JOptionPane.showInputDialog("Qual o tipo de menu desejado? (Gráfico = 1 ou Texto = 2): "));
-            
-            if (menu != 1 && menu != 2) {
-                System.out.println("Valor inválido");
-                return;
-            }
+            entradaValida = false;
+            do {
+                try {
+                    String input = JOptionPane.showInputDialog("Qual o tipo de menu desejado? (Gráfico = 1 ou Texto = 2): ");
+                    if (input == null) return; // Encerra o programa se cancelar
+                    menu = Integer.parseInt(input);
+                    if (menu == 1 || menu == 2) {
+                        entradaValida = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Valor invalido. Digite 1 para Grafico ou 2 para Texto.");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
+                }
+            } while (!entradaValida);
             
             if (menu == 1) {
                 mn = new MenuGrafico();
@@ -35,23 +60,53 @@ public class App {
             
             switch(opcao) {
                 case 1: 
-                    String nome; int idade;
-                    String ra; String curso; int semestre;
+                    String nome; int idade = 0;
+                    String ra; String curso; int semestre = 0;
                     
                     nome = JOptionPane.showInputDialog("Nome: ");
-                    idade = Integer.parseInt(JOptionPane.showInputDialog("Idade: "));
-                    ra = JOptionPane.showInputDialog("RA: ");
-                    curso = JOptionPane.showInputDialog("Curso: ");
-                    semestre = Integer.parseInt(JOptionPane.showInputDialog("Semestre: "));
+                    if (nome == null) break; // Retorna ao menu
                     
+                    entradaValida = false;
+                    do {
+                        try {
+                            String input = JOptionPane.showInputDialog("Idade: ");
+                            if (input == null) break;
+                            idade = Integer.parseInt(input);
+                            entradaValida = true;
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
+                        }
+                    } while (!entradaValida);
+                    if (!entradaValida) break; // Aborta a insercao se cancelou
+
+                    ra = JOptionPane.showInputDialog("RA: ");
+                    if (ra == null) break;
+                    
+                    curso = JOptionPane.showInputDialog("Curso: ");
+                    if (curso == null) break;
+                    
+                    entradaValida = false;
+                    do {
+                        try {
+                            String input = JOptionPane.showInputDialog("Semestre: ");
+                            if (input == null) break;
+                            semestre = Integer.parseInt(input);
+                            entradaValida = true;
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
+                        }
+                    } while (!entradaValida);
+                    if (!entradaValida) break;
+
                     Aluno a = new Aluno(nome, idade, ra, curso, semestre);
                     ca.inserir(a);
                     
                     break;
                 case 2:
                     String ra_remover = JOptionPane.showInputDialog("RA a ser removido: ");
-                    ca.remover(ra_remover);
-                    
+                    if (ra_remover != null) {
+                        ca.remover(ra_remover);
+                    }
                     break;
                 case 3: 
                     ca.listar();
