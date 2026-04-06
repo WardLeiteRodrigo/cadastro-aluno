@@ -21,7 +21,7 @@ public class MenuGrafico implements IMenu {
             try {
                 String input = JOptionPane.showInputDialog(itens);
                 if (input == null) {
-                    return 4; // Se o usuario cancelar, encerra o loop assumindo 'sair'
+                    return 6; // Se o usuario cancelar, encerra o loop assumindo 'sair'
                 }
                 opcao = Integer.parseInt(input);
                 entradaValida = true;
