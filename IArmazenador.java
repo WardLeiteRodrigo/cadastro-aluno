@@ -7,5 +7,7 @@ public interface IArmazenador {
     
     public boolean remover(String ra);
     
+    public boolean atualizar(String ra, Aluno novoAluno);
+    
     public void listar();
 }

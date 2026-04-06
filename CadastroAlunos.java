@@ -9,12 +9,16 @@ public class CadastroAlunos {
         arm = new Armazenador(qtde);
     }
     
-    public void inserir(Aluno a) {
-        arm.inserir(a);
+    public boolean inserir(Aluno a) {
+        return arm.inserir(a);
     }
     
-    public void remover(String ra) {
-        arm.remover(ra);
+    public boolean remover(String ra) {
+        return arm.remover(ra);
+    }
+    
+    public boolean atualizar(String ra, Aluno novoAluno) {
+        return arm.atualizar(ra, novoAluno);
     }
     
     public void listar() {
