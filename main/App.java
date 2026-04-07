@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import model.Aluno;
 import model.IdadeInvalidaException;
+import model.SemestreInvalidoException;
 import storage.RaDuplicadoException;
 import storage.RaInexistenteException;
 import storage.CadastroCheioException;
@@ -69,6 +70,8 @@ public class App {
             // ignorado: pode ocorrer se chamado mais de uma vez
         } catch (IdadeInvalidaException e) {
             // dados internos validos; nao deve ocorrer
+        } catch (SemestreInvalidoException e) {
+            // dados internos validos; nao deve ocorrer
         }
     }
 
@@ -83,7 +86,7 @@ public class App {
         String nome = io.lerTexto("Nome:");
         if (nome == null) return;
 
-        Integer idade = io.lerInteiro("Idade:", Aluno.IDADE_MIN, Aluno.IDADE_MAX);
+        Integer idade = io.lerInteiro("Idade:", -100, 200);
         if (idade == null) return;
 
         String ra = io.lerTexto("RA:");
@@ -92,7 +95,7 @@ public class App {
         String curso = io.lerTexto("Curso:");
         if (curso == null) return;
 
-        Integer semestre = io.lerInteiro("Semestre:", 1, 20);
+        Integer semestre = io.lerInteiro("Semestre:", -100, 200);
         if (semestre == null) return;
 
         try {
@@ -104,6 +107,8 @@ public class App {
         } catch (CadastroCheioException e) {
             io.mostrar("Erro: o cadastro atingiu sua capacidade maxima.");
         } catch (IdadeInvalidaException e) {
+            io.mostrar("Erro: " + e.getMessage());
+        } catch (SemestreInvalidoException e) {
             io.mostrar("Erro: " + e.getMessage());
         } catch (Exception e) {
             io.mostrar("Erro inesperado ao inserir o aluno. Tente novamente.");
@@ -164,13 +169,13 @@ public class App {
         String nome = io.lerTexto("Novo nome:");
         if (nome == null) return;
 
-        Integer idade = io.lerInteiro("Nova idade:", Aluno.IDADE_MIN, Aluno.IDADE_MAX);
+        Integer idade = io.lerInteiro("Nova idade:", -100, 200);
         if (idade == null) return;
 
         String curso = io.lerTexto("Novo curso:");
         if (curso == null) return;
 
-        Integer semestre = io.lerInteiro("Novo semestre:", 1, 20);
+        Integer semestre = io.lerInteiro("Novo semestre:", -100, 200);
         if (semestre == null) return;
 
         try {
@@ -180,6 +185,8 @@ public class App {
         } catch (RaInexistenteException e) {
             io.mostrar("Erro: RA nao encontrado para atualizacao.");
         } catch (IdadeInvalidaException e) {
+            io.mostrar("Erro: " + e.getMessage());
+        } catch (SemestreInvalidoException e) {
             io.mostrar("Erro: " + e.getMessage());
         } catch (Exception e) {
             io.mostrar("Erro inesperado ao atualizar o aluno. Tente novamente.");

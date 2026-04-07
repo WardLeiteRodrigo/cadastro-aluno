@@ -3,6 +3,7 @@ package test;
 import main.CadastroAlunos;
 import model.Aluno;
 import model.IdadeInvalidaException;
+import model.SemestreInvalidoException;
 import storage.RaDuplicadoException;
 import storage.RaInexistenteException;
 import storage.CadastroCheioException;
@@ -52,6 +53,8 @@ public class TestaCadastro {
         try {
             return new Aluno("Fulano de Tal", 25, ra, "Computacao", 3);
         } catch (IdadeInvalidaException e) {
+            throw new RuntimeException("Dados de teste invalidos", e);
+        } catch (SemestreInvalidoException e) {
             throw new RuntimeException("Dados de teste invalidos", e);
         }
     }
@@ -166,10 +169,12 @@ public class TestaCadastro {
      */
     private static void testIdadeInvalida() {
         try {
-            new Aluno("Crianca", 10, "RA1", "Curso", 1);
-            verificar("idade < 16 deveria lancar excecao", false);
+            new Aluno("Negativo", -1, "RA1", "Curso", 1);
+            verificar("idade < 0 deveria lancar excecao", false);
         } catch (IdadeInvalidaException e) {
-            verificar("idade < 16 lanca IdadeInvalidaException", true);
+            verificar("idade < 0 lanca IdadeInvalidaException", true);
+        } catch (SemestreInvalidoException e) {
+            verificar("idade < 0 (excecao errada)", false);
         }
 
         try {
@@ -177,6 +182,31 @@ public class TestaCadastro {
             verificar("idade > 120 deveria lancar excecao", false);
         } catch (IdadeInvalidaException e) {
             verificar("idade > 120 lanca IdadeInvalidaException", true);
+        } catch (SemestreInvalidoException e) {
+            verificar("idade > 120 (excecao errada)", false);
+        }
+    }
+
+    /**
+     * Testa que semestres fora do intervalo lancam {@link SemestreInvalidoException}.
+     */
+    private static void testSemestreInvalido() {
+        try {
+            new Aluno("Fulano", 20, "RA1", "Curso", 0);
+            verificar("semestre < 1 deveria lancar excecao", false);
+        } catch (SemestreInvalidoException e) {
+            verificar("semestre < 1 lanca SemestreInvalidoException", true);
+        } catch (IdadeInvalidaException e) {
+            verificar("semestre < 1 (excecao errada)", false);
+        }
+
+        try {
+            new Aluno("Fulano", 20, "RA2", "Curso", 25);
+            verificar("semestre > 12 deveria lancar excecao", false);
+        } catch (SemestreInvalidoException e) {
+            verificar("semestre > 12 lanca SemestreInvalidoException", true);
+        } catch (IdadeInvalidaException e) {
+            verificar("semestre > 12 (excecao errada)", false);
         }
     }
 
@@ -215,6 +245,7 @@ public class TestaCadastro {
         testAtualizarOk();
         testAtualizarInexistente();
         testIdadeInvalida();
+        testSemestreInvalido();
         testListar();
 
         System.out.println("\n=== Resumo ===");

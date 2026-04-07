@@ -14,10 +14,16 @@ package model;
 public class Aluno extends Pessoa {
 
     /** Idade minima permitida para um aluno. */
-    public static final int IDADE_MIN = 16;
+    public static final int IDADE_MIN = 0;
 
     /** Idade maxima permitida para um aluno. */
     public static final int IDADE_MAX = 120;
+
+    /** Semestre minimo permitido para um aluno. */
+    public static final int SEMESTRE_MIN = 1;
+
+    /** Semestre maximo permitido para um aluno. */
+    public static final int SEMESTRE_MAX = 12;
 
     // Atributos especificos do aluno (encapsulados)
     private String ra;
@@ -25,22 +31,28 @@ public class Aluno extends Pessoa {
     private int semestre;
 
     /**
-     * Constroi um objeto Aluno validando a idade.
+     * Constroi um objeto Aluno validando idade e semestre.
      *
      * @param nome     Nome completo do aluno.
      * @param idade    Idade do aluno (deve estar entre {@link #IDADE_MIN} e {@link #IDADE_MAX}).
      * @param ra       Registro academico do aluno.
      * @param curso    Curso no qual o aluno esta matriculado.
-     * @param semestre Semestre atual do aluno.
-     * @throws IdadeInvalidaException se a idade estiver fora do intervalo valido.
+     * @param semestre Semestre atual do aluno (entre {@link #SEMESTRE_MIN} e {@link #SEMESTRE_MAX}).
+     * @throws IdadeInvalidaException     se a idade estiver fora do intervalo valido.
+     * @throws SemestreInvalidoException  se o semestre estiver fora do intervalo valido.
      */
     public Aluno(String nome, int idade, String ra, String curso, int semestre)
-            throws IdadeInvalidaException {
+            throws IdadeInvalidaException, SemestreInvalidoException {
         super(nome, idade);
 
         if (idade < IDADE_MIN || idade > IDADE_MAX) {
             throw new IdadeInvalidaException(
                 "Idade invalida: deve estar entre " + IDADE_MIN + " e " + IDADE_MAX + ".");
+        }
+
+        if (semestre < SEMESTRE_MIN || semestre > SEMESTRE_MAX) {
+            throw new SemestreInvalidoException(
+                "Semestre invalido: deve estar entre " + SEMESTRE_MIN + " e " + SEMESTRE_MAX + ".");
         }
 
         // Normaliza o RA (remove espacos no inicio/fim) para evitar duplicatas mascaradas

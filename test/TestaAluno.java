@@ -6,6 +6,7 @@ package test;
 
 import model.Aluno;
 import model.IdadeInvalidaException;
+import model.SemestreInvalidoException;
 
 public class TestaAluno {
     public static void main(String args[]) {
@@ -14,6 +15,8 @@ public class TestaAluno {
             System.out.println(a);
             System.out.println("Nome bibliografico: " + a.getNomeBiblio());
         } catch (IdadeInvalidaException e) {
+            System.out.println("Erro: " + e.getMessage());
+        } catch (SemestreInvalidoException e) {
             System.out.println("Erro: " + e.getMessage());
         }
     }
