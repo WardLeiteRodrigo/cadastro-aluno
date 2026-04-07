@@ -22,8 +22,26 @@ public class App {
      * @param args Argumentos de linha de comando.
      */
     public static void main(String args[]) {
-        int qtde = 0;
         boolean entradaValida = false;
+        int menu = 0;
+        
+        do {
+            try {
+                String input = JOptionPane.showInputDialog("Qual o tipo de menu desejado? (Gráfico = 1 ou Texto = 2): ");
+                if (input == null) return; // Encerra o programa se cancelar
+                menu = Integer.parseInt(input);
+                if (menu == 1 || menu == 2) {
+                    entradaValida = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Valor invalido. Digite 1 para Grafico ou 2 para Texto.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
+            }
+        } while (!entradaValida);
+
+        int qtde = 0;
+        entradaValida = false;
         
         do {
             try {
@@ -43,35 +61,17 @@ public class App {
         CadastroAlunos ca = new CadastroAlunos(qtde);
 
         IMenu mn = null; 
-        int menu = 0;
+        if (menu == 1) {
+            mn = new MenuGrafico();
+        } else {
+            mn = new MenuTexto(); 
+        }
 
         String [] itensMenu = {"1 - inserir", "2 - remover", "3 - listar", "4 - sair (antigo)", "5 - atualizar", "6 - sair"};
 
         int opcao = 0;
         
         do {
-            entradaValida = false;
-            do {
-                try {
-                    String input = JOptionPane.showInputDialog("Qual o tipo de menu desejado? (Gráfico = 1 ou Texto = 2): ");
-                    if (input == null) return; // Encerra o programa se cancelar
-                    menu = Integer.parseInt(input);
-                    if (menu == 1 || menu == 2) {
-                        entradaValida = true;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Valor invalido. Digite 1 para Grafico ou 2 para Texto.");
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
-                }
-            } while (!entradaValida);
-            
-            if (menu == 1) {
-                mn = new MenuGrafico();
-            } else {
-                mn = new MenuTexto(); 
-            }
-            
             opcao = mn.criarMenu(itensMenu);
             
             switch(opcao) {
