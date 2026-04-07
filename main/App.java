@@ -1,10 +1,24 @@
 /**
+ * Classe principal do aplicativo que inicializa o sistema de cadastro e o menu.
+ * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
+package main;
+
+import model.Aluno;
+import ui.IMenu;
+import ui.MenuGrafico;
+import ui.MenuTexto;
+
 import javax.swing.JOptionPane;
 
 public class App {
+    /**
+     * Metodo principal que executa o sistema.
+     * 
+     * @param args Argumentos de linha de comando.
+     */
     public static void main(String args[]) {
         int qtde = 0;
         boolean entradaValida = false;
@@ -124,7 +138,9 @@ public class App {
                     }
                     break;
                 case 3: 
-                    ca.listar();
+                    int tipoListagem = JOptionPane.showConfirmDialog(null, "Deseja listar no formato bibliografico?", "Formato de Listagem", JOptionPane.YES_NO_OPTION);
+                    boolean formatoBibliografico = (tipoListagem == JOptionPane.YES_OPTION);
+                    ca.listar(formatoBibliografico);
                     break; 
                 case 4:
                     // Mantido vazio apenas para não quebrar caso alguem digite 4 por engano
