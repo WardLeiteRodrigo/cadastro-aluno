@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Classe utilitária para manipulação de textos.
  * Remove espaços excedentes e permite contagem e inversão de palavras.
@@ -13,7 +15,7 @@ public class Texto {
      * Ao inicializar, espaços excedentes são removidos automaticamente.
      * @param txt O texto bruto recebido.
      */
-    Texto(String txt) {
+    public Texto(String txt) {
         setTxt(txt);
         limpaEspacosExcedentes();
     }

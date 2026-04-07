@@ -1,3 +1,9 @@
+package main;
+
+import model.Aluno;
+import storage.IArmazenador;
+import storage.Armazenador;
+
 /**
  * Classe responsável por gerir as interações e atuar como conector entre a interface
  * de entrada da aplicação (App) e o gerenciador lógico e funcional dos dados (IArmazenador).

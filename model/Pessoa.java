@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Esta classe modela os dados primários de uma Pessoa (Nome e Idade).
  * Classe base para demais especializações (ex. Aluno).

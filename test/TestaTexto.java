@@ -1,5 +1,7 @@
 package test;
 
+import model.Texto;
+
 /**
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 17/03/2026

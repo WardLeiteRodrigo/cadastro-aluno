@@ -1,3 +1,5 @@
+package ui;
+
 /**
  * Interface destinada a estabelecer o contrato padrão de exibição de menu (Polimorfismo).
  * 

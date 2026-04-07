@@ -1,3 +1,10 @@
+package main;
+
+import model.Aluno;
+import ui.IMenu;
+import ui.MenuGrafico;
+import ui.MenuTexto;
+
 import javax.swing.JOptionPane;
 import java.util.Scanner;
 

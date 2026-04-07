@@ -1,3 +1,7 @@
+package storage;
+
+import model.Aluno;
+
 /**
  * Implementa em memória a persistência e manutenção de alunos usando
  * vetores (Arrays) definidos com capacidade limitante.
@@ -12,7 +16,7 @@ public class Armazenador implements IArmazenador {
      * O Construtor constrói a limitação base de memória e declara a matriz de dados.
      * @param qtde Máximo de aberturas de registro.
      */
-    Armazenador(int qtde) {
+    public Armazenador(int qtde) {
         arm = new Aluno[qtde];
     }
 

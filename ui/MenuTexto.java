@@ -1,3 +1,7 @@
+package ui;
+
+import main.App;
+
 /**
  * Implementação da interface de Menu para o uso via CLI (Console/Linha de Comando).
  * Pega as opções do sistema e formata-as em texto para serem capturadas pela entrada padrão (System.in).

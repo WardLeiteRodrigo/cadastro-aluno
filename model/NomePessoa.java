@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Representa o nome de uma pessoa utilizando a classe utilitária Texto.
  * Fornece métodos para obter nomes padronizados e em formato bibliográfico.

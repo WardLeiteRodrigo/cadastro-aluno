@@ -1,3 +1,7 @@
+package storage;
+
+import model.Aluno;
+
 /**
  * Interface que define os mandatos e contratos de armazenamento e persistência
  * na simulação do banco de dados (array de alunos).

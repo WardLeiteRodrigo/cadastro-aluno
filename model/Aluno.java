@@ -1,3 +1,5 @@
+package model;
+
 /**
  * A classe Aluno herda de Pessoa e acrescenta atributos acadêmicos.
  * Ela armazena RA, Curso e Semestre de um aluno.
@@ -6,9 +8,9 @@
  * @version 24/03/2026
  */
 public class Aluno extends Pessoa {
-    String ra;
-    String curso;
-    int semestre;
+    public String ra;
+    public String curso;
+    public int semestre;
 
     /**
      * Construtor da classe Aluno.
@@ -19,7 +21,7 @@ public class Aluno extends Pessoa {
      * @param curso    Nome do curso que o aluno estuda.
      * @param semestre Semestre atual.
      */
-    Aluno(String nome, int idade, String ra, String curso, int semestre) {
+    public Aluno(String nome, int idade, String ra, String curso, int semestre) {
         super(nome, idade);
         try {
             this.ra = ra;
