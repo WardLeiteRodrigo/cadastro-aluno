@@ -89,6 +89,21 @@ public class Armazenador implements IArmazenador {
     }
     
     /**
+     * Verifica se um aluno com o RA informado existe no vetor.
+     * 
+     * @param ra O RA do aluno a ser buscado.
+     * @return true se o aluno for encontrado, false caso contrario.
+     */
+    public boolean existe(String ra) {
+        for (int i = 0; i < arm.length; i++) {
+            if (arm[i] != null && arm[i].getRa().equals(ra)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Lista todos os alunos armazenados no vetor.
      * 
      * @param formatoBibliografico Indica se os nomes devem ser impressos no formato bibliografico.

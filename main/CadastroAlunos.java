@@ -56,6 +56,16 @@ public class CadastroAlunos {
     }
     
     /**
+     * Verifica se um aluno com o RA especificado existe no cadastro.
+     * 
+     * @param ra O registro academico do aluno.
+     * @return true se existe, false caso contrario.
+     */
+    public boolean existe(String ra) {
+        return arm.existe(ra);
+    }
+    
+    /**
      * Lista os alunos cadastrados.
      * 
      * @param formatoBibliografico Se true, formata os nomes bibliograficamente.

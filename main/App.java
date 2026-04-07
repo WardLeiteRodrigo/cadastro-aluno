@@ -207,6 +207,12 @@ public class App {
                     String ra_atualizar = lerString("RA do aluno a ser atualizado: ", menu, sc);
                     if (ra_atualizar == null) break;
                     
+                    if (!ca.existe(ra_atualizar)) {
+                        String alunosDisponiveis = ca.listar(false);
+                        mostrarMensagem("Erro: RA nao encontrado.\n\nAlunos disponiveis:\n" + alunosDisponiveis, menu);
+                        break;
+                    }
+                    
                     String novoNome; int novaIdade = 0;
                     String novoCurso; int novoSemestre = 0;
                     

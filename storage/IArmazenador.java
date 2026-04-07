@@ -35,6 +35,14 @@ public interface IArmazenador {
     public boolean atualizar(String ra, Aluno novoAluno);
     
     /**
+     * Verifica se um aluno com o RA especificado existe no armazenamento.
+     * 
+     * @param ra O registro academico do aluno a ser buscado.
+     * @return true se o aluno existe, false caso contrario.
+     */
+    public boolean existe(String ra);
+    
+    /**
      * Lista todos os alunos armazenados.
      * 
      * @param formatoBibliografico Se true, lista os nomes em formato bibliografico.
