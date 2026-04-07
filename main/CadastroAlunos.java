@@ -1,10 +1,12 @@
+package main;
+
 /**
  * Classe que gerencia as operacoes de cadastro de alunos utilizando um armazenador.
  * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
-package main;
+ 
 
 import model.Aluno;
 import storage.IArmazenador;

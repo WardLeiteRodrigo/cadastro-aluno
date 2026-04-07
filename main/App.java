@@ -1,10 +1,12 @@
+package main;
+
 /**
  * Classe principal do aplicativo que inicializa o sistema de cadastro e o menu.
  * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 24/03/2026
  */
-package main;
+ 
 
 import model.Aluno;
 import ui.IMenu;
