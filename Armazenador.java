@@ -10,6 +10,13 @@ public class Armazenador implements IArmazenador {
     }
 
     public boolean inserir(Aluno a) {
+        // Verifica se ja existe um aluno com o mesmo RA
+        for (int j = 0; j < arm.length; j++) {
+            if (arm[j] != null && arm[j].getRa().equals(a.getRa())) {
+                return false; // RA duplicado
+            }
+        }
+
         int i = 0;
         int tam = arm.length;
         boolean ctrl = false;
@@ -23,7 +30,7 @@ public class Armazenador implements IArmazenador {
             
             i++;
         }
-        return true;
+        return ctrl; // Retorna true se inseriu, false se o vetor estiver cheio
     }
 
     public boolean remover(String ra) {
@@ -38,6 +45,16 @@ public class Armazenador implements IArmazenador {
             }
         }
         // retorna falso por padrão
+        return false;
+    }
+    
+    public boolean atualizar(String ra, Aluno novoAluno) {
+        for (int i = 0; i < arm.length; i++) {
+            if (arm[i] != null && arm[i].getRa().equals(ra)) {
+                arm[i] = novoAluno;
+                return true;
+            }
+        }
         return false;
     }
     

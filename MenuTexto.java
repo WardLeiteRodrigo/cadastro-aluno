@@ -17,14 +17,20 @@ public class MenuTexto implements IMenu {
         itens = itens + "\n\nSelecione a opcao: ";
 
         Scanner sc = new Scanner(System.in);
+        boolean entradaValida = false;
+        opcao = 0;
 
-        System.out.print(itens);
+        do {
+            System.out.print(itens);
+            String s = sc.nextLine();
+            try {
+                opcao = Integer.parseInt(s);
+                entradaValida = true;
+            } catch (NumberFormatException e) {
+                System.out.println("\nEntrada invalida. Por favor, digite um numero valido.\n");
+            }
+        } while (!entradaValida);
 
-        String s = sc.nextLine();
-
-        sc.close();
-
-        opcao = Integer.parseInt(s);
         return opcao;
     }
 }

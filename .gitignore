@@ -2,7 +2,7 @@
 .vscode/
 .idea/
 *.iml
-
+*.pdf
 *.class
 *.ctxt
 .DS_Store

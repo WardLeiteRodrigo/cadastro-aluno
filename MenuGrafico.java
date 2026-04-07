@@ -14,7 +14,22 @@ public class MenuGrafico implements IMenu {
         }
         
         itens = itens + "\n\nSelecione a opcao: ";
-        opcao = Integer.parseInt(JOptionPane.showInputDialog(itens));
+        boolean entradaValida = false;
+        opcao = 0;
+        
+        do {
+            try {
+                String input = JOptionPane.showInputDialog(itens);
+                if (input == null) {
+                    return 6; // Se o usuario cancelar, encerra o loop assumindo 'sair'
+                }
+                opcao = Integer.parseInt(input);
+                entradaValida = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
+            }
+        } while (!entradaValida);
+        
         return opcao;
     }
 }
