@@ -107,7 +107,7 @@ public class App {
             mn = new MenuTexto(); 
         }
 
-        String [] itensMenu = {"1 - inserir", "2 - remover", "3 - listar", "4 - sair (antigo)", "5 - atualizar", "6 - sair"};
+        String [] itensMenu = {"1 - inserir", "2 - remover", "3 - listar", "4 - atualizar", "5 - sair"};
 
         int opcao = 0;
         
@@ -184,9 +184,6 @@ public class App {
                     ca.listar(formatoBibliografico);
                     break; 
                 case 4:
-                    // Mantido vazio apenas para não quebrar caso alguem digite 4 por engano
-                    break;
-                case 5:
                     String ra_atualizar = lerString("RA do aluno a ser atualizado: ", menu, sc);
                     if (ra_atualizar == null) break;
                     
@@ -239,10 +236,10 @@ public class App {
                     }
                     
                     break;
-                case 6: break;
+                case 5: break;
                 default:
             }
-        } while(opcao != 6);
+        } while(opcao != 5);
         
         sc.close();
     }
