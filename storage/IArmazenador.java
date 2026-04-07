@@ -38,6 +38,7 @@ public interface IArmazenador {
      * Lista todos os alunos armazenados.
      * 
      * @param formatoBibliografico Se true, lista os nomes em formato bibliografico.
+     * @return Uma string formatada com os dados de todos os alunos.
      */
-    public void listar(boolean formatoBibliografico);
+    public String listar(boolean formatoBibliografico);
 }

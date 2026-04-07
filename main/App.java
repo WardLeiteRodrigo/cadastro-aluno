@@ -181,7 +181,8 @@ public class App {
                     break;
                 case 3: 
                     boolean formatoBibliografico = lerConfirmacao("Deseja listar no formato bibliografico?", menu, sc);
-                    ca.listar(formatoBibliografico);
+                    String lista = ca.listar(formatoBibliografico);
+                    mostrarMensagem(lista, menu);
                     break; 
                 case 4:
                     String ra_atualizar = lerString("RA do aluno a ser atualizado: ", menu, sc);

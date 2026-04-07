@@ -92,17 +92,30 @@ public class Armazenador implements IArmazenador {
      * Lista todos os alunos armazenados no vetor.
      * 
      * @param formatoBibliografico Indica se os nomes devem ser impressos no formato bibliografico.
+     * @return Uma string contendo a lista formatada dos alunos.
      */
-    public void listar(boolean formatoBibliografico) {
+    public String listar(boolean formatoBibliografico) {
+        StringBuilder sb = new StringBuilder();
+        boolean temAlunos = false;
+        
         for (int i = 0; i < arm.length; i++) {
             if (arm[i] != null) {
+                temAlunos = true;
                 if (formatoBibliografico) {
-                    System.out.println(arm[i].getNomeBiblio() + " - RA: " + arm[i].getRa() + " - Curso: " + arm[i].curso + " - Semestre: " + arm[i].semestre);
+                    sb.append(arm[i].getNomeBiblio()).append(" - RA: ").append(arm[i].getRa())
+                      .append(" - Curso: ").append(arm[i].curso)
+                      .append(" - Semestre: ").append(arm[i].semestre).append("\n");
                 } else {
-                    System.out.println(arm[i].toString());
-                    System.out.println("-----------------------------");
+                    sb.append(arm[i].toString()).append("\n");
+                    sb.append("-----------------------------\n");
                 }
             }
         }
+        
+        if (!temAlunos) {
+            return "Nenhum aluno cadastrado.";
+        }
+        
+        return sb.toString();
     }
 }

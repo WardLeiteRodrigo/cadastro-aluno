@@ -59,8 +59,9 @@ public class CadastroAlunos {
      * Lista os alunos cadastrados.
      * 
      * @param formatoBibliografico Se true, formata os nomes bibliograficamente.
+     * @return String formatada com os alunos.
      */
-    public void listar(boolean formatoBibliografico) {
-        arm.listar(formatoBibliografico);
+    public String listar(boolean formatoBibliografico) {
+        return arm.listar(formatoBibliografico);
     }
 }
