@@ -19,14 +19,23 @@ import java.util.Scanner;
 public class App {
 
     private static String lerString(String msg, int tipoMenu, Scanner sc) {
-        if (tipoMenu == 1) {
-            return JOptionPane.showInputDialog(msg);
-        } else {
-            System.out.print(msg);
-            String input = sc.nextLine();
-            if (input.trim().isEmpty()) return null; // Simula cancelamento se der enter vazio
-            return input;
-        }
+        String input;
+        do {
+            if (tipoMenu == 1) {
+                input = JOptionPane.showInputDialog(msg);
+                if (input == null) return null; // Cancela a operacao
+            } else {
+                System.out.print(msg + " (ou digite 'cancelar' para abortar): ");
+                input = sc.nextLine();
+                if (input.trim().equalsIgnoreCase("cancelar")) return null; // Cancela a operacao
+            }
+            
+            if (input.trim().isEmpty()) {
+                mostrarMensagem("Entrada invalida. O valor nao pode ser vazio.", tipoMenu);
+            }
+        } while (input.trim().isEmpty());
+        
+        return input;
     }
 
     private static void mostrarMensagem(String msg, int tipoMenu) {
