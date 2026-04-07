@@ -193,7 +193,8 @@ public class App {
                         if (removeu) {
                             mostrarMensagem("Aluno removido com sucesso!", menu);
                         } else {
-                            mostrarMensagem("Erro: RA nao encontrado.", menu);
+                            String alunosDisponiveis = ca.listar(false);
+                            mostrarMensagem("Erro: RA nao encontrado.\n\nAlunos disponiveis:\n" + alunosDisponiveis, menu);
                         }
                     }
                     break;
