@@ -1,52 +1,56 @@
-/**
- * Interface que define os metodos para armazenamento de alunos.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
 package storage;
 
 import model.Aluno;
 
+/**
+ * Interface que define o contrato de uma estrutura de armazenamento de
+ * alunos. Permite que o cadastro use diferentes estruturas de dados
+ * (vetor, lista encadeada, etc.) sem alterar o restante do sistema.
+ *
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
+ * @version 1.0 2026/04/07
+ */
 public interface IArmazenador {
+
     /**
-     * Insere um novo aluno no armazenamento.
-     * 
+     * Insere um novo aluno na estrutura de armazenamento.
+     *
      * @param a O aluno a ser inserido.
-     * @return true se inserido com sucesso, false caso contrario.
+     * @throws RaDuplicadoException   se ja existir um aluno com o mesmo RA.
+     * @throws CadastroCheioException se a estrutura ja estiver na capacidade maxima.
      */
-    public boolean inserir(Aluno a);
-    
+    void inserir(Aluno a) throws RaDuplicadoException, CadastroCheioException;
+
     /**
      * Remove um aluno do armazenamento pelo RA.
-     * 
+     *
      * @param ra O registro academico do aluno a ser removido.
-     * @return true se removido com sucesso, false caso contrario.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
      */
-    public boolean remover(String ra);
-    
+    void remover(String ra) throws RaInexistenteException;
+
     /**
-     * Atualiza os dados de um aluno no armazenamento.
-     * 
-     * @param ra O registro academico do aluno a ser atualizado.
-     * @param novoAluno O novo objeto Aluno contendo os dados atualizados.
-     * @return true se atualizado com sucesso, false caso contrario.
+     * Atualiza os dados de um aluno existente.
+     *
+     * @param ra        O RA do aluno a ser substituido.
+     * @param novoAluno O novo objeto Aluno com os dados atualizados.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
      */
-    public boolean atualizar(String ra, Aluno novoAluno);
-    
+    void atualizar(String ra, Aluno novoAluno) throws RaInexistenteException;
+
     /**
-     * Verifica se um aluno com o RA especificado existe no armazenamento.
-     * 
-     * @param ra O registro academico do aluno a ser buscado.
-     * @return true se o aluno existe, false caso contrario.
+     * Verifica se um aluno com o RA especificado existe.
+     *
+     * @param ra O RA a ser buscado.
+     * @return true se existir, false caso contrario.
      */
-    public boolean existe(String ra);
-    
+    boolean existe(String ra);
+
     /**
      * Lista todos os alunos armazenados.
-     * 
-     * @param formatoBibliografico Se true, lista os nomes em formato bibliografico.
-     * @return Uma string formatada com os dados de todos os alunos.
+     *
+     * @param formatoBibliografico Se true, formata os nomes em estilo bibliografico.
+     * @return Uma string com a listagem formatada (ou aviso, se vazio).
      */
-    public String listar(boolean formatoBibliografico);
+    String listar(boolean formatoBibliografico);
 }

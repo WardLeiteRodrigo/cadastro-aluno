@@ -1,75 +1,81 @@
 package main;
 
-/**
- * Classe que gerencia as operacoes de cadastro de alunos utilizando um armazenador.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
- 
-
 import model.Aluno;
 import storage.IArmazenador;
 import storage.Armazenador;
+import storage.RaDuplicadoException;
+import storage.RaInexistenteException;
+import storage.CadastroCheioException;
 
+/**
+ * Fachada que expoe as operacoes de cadastro de alunos delegando ao
+ * armazenador subjacente. Mantem o codigo do App desacoplado da
+ * estrutura de dados escolhida.
+ *
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
+ * @version 1.0 2026/04/07
+ */
 public class CadastroAlunos {
-    IArmazenador arm; 
-    
+
+    /** Estrutura de armazenamento (programada para a interface). */
+    private IArmazenador arm;
+
     /**
-     * Construtor para objetos da classe CadastroAlunos.
-     * 
-     * @param qtde A capacidade de alunos a serem cadastrados.
+     * Cria um cadastro com capacidade fixa.
+     *
+     * @param qtde Capacidade maxima do cadastro.
      */
-    public CadastroAlunos (int qtde) {
-        arm = new Armazenador(qtde);
+    public CadastroAlunos(int qtde) {
+        this.arm = new Armazenador(qtde);
     }
-    
+
     /**
      * Insere um aluno no cadastro.
-     * 
-     * @param a O aluno a ser inserido.
-     * @return true se inserido com sucesso, false caso contrario.
+     *
+     * @param a Aluno a ser inserido.
+     * @throws RaDuplicadoException   se ja existir um aluno com o mesmo RA.
+     * @throws CadastroCheioException se o cadastro estiver cheio.
      */
-    public boolean inserir(Aluno a) {
-        return arm.inserir(a);
+    public void inserir(Aluno a) throws RaDuplicadoException, CadastroCheioException {
+        arm.inserir(a);
     }
-    
+
     /**
-     * Remove um aluno do cadastro atraves do RA.
-     * 
-     * @param ra O registro academico do aluno a ser removido.
-     * @return true se removido com sucesso, false caso contrario.
+     * Remove um aluno do cadastro.
+     *
+     * @param ra RA do aluno a ser removido.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
      */
-    public boolean remover(String ra) {
-        return arm.remover(ra);
+    public void remover(String ra) throws RaInexistenteException {
+        arm.remover(ra);
     }
-    
+
     /**
-     * Atualiza as informacoes de um aluno existente no cadastro.
-     * 
-     * @param ra O registro academico do aluno a ser atualizado.
-     * @param novoAluno O novo aluno com os dados atualizados.
-     * @return true se a atualizacao for bem-sucedida, false caso contrario.
+     * Atualiza os dados de um aluno existente.
+     *
+     * @param ra        RA do aluno a ser atualizado.
+     * @param novoAluno Novo objeto Aluno com os dados atualizados.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
      */
-    public boolean atualizar(String ra, Aluno novoAluno) {
-        return arm.atualizar(ra, novoAluno);
+    public void atualizar(String ra, Aluno novoAluno) throws RaInexistenteException {
+        arm.atualizar(ra, novoAluno);
     }
-    
+
     /**
      * Verifica se um aluno com o RA especificado existe no cadastro.
-     * 
-     * @param ra O registro academico do aluno.
-     * @return true se existe, false caso contrario.
+     *
+     * @param ra RA a ser buscado.
+     * @return true se existir, false caso contrario.
      */
     public boolean existe(String ra) {
         return arm.existe(ra);
     }
-    
+
     /**
      * Lista os alunos cadastrados.
-     * 
+     *
      * @param formatoBibliografico Se true, formata os nomes bibliograficamente.
-     * @return String formatada com os alunos.
+     * @return String com a listagem.
      */
     public String listar(boolean formatoBibliografico) {
         return arm.listar(formatoBibliografico);
