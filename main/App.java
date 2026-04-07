@@ -113,6 +113,11 @@ public class App {
 
         CadastroAlunos ca = new CadastroAlunos(qtde);
 
+        // Pre-populando alunos na memoria para facilitar os testes (Mock data)
+        ca.inserir(new Aluno("Alan Mathison Turing", 41, "RA1001", "Ciencia da Computacao", 5));
+        ca.inserir(new Aluno("Ada Augusta Lovelace", 36, "RA1002", "Matematica", 8));
+        ca.inserir(new Aluno("Grace Murray Hopper", 85, "RA1003", "Sistemas de Informacao", 6));
+
         IMenu mn = null; 
         if (menu == 1) {
             mn = new MenuGrafico();
