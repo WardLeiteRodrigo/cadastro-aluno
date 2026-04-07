@@ -1,136 +1,137 @@
-/**
- * Classe que implementa a interface IArmazenador para armazenar alunos em um vetor.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
 package storage;
 
 import model.Aluno;
 
+/**
+ * Implementacao de {@link IArmazenador} usando um vetor (array) de
+ * tamanho fixo definido na construcao.
+ *
+ * Erros de dominio (RA duplicado, RA inexistente, cadastro cheio) sao
+ * sinalizados por excecoes especificas, permitindo que a camada de
+ * apresentacao trate cada caso com mensagem amigavel.
+ *
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
+ * @version 1.0 2026/04/07
+ */
 public class Armazenador implements IArmazenador {
-    Aluno[] arm;
-    
+
+    /** Vetor de alunos. Posicoes nulas representam espacos livres. */
+    private Aluno[] alunos;
+
     /**
-     * Construtor para objetos da classe Armazenador.
-     * 
-     * @param qtde A capacidade maxima de alunos no vetor.
+     * Cria um armazenador com capacidade fixa.
+     *
+     * @param qtde Capacidade maxima do armazenador.
      */
     public Armazenador(int qtde) {
-        arm = new Aluno[qtde];
+        alunos = new Aluno[qtde];
     }
 
     /**
-     * Insere um aluno no vetor de armazenamento, caso o RA nao seja duplicado e haja espaco.
-     * 
+     * Insere um aluno no primeiro espaco livre do vetor.
+     *
      * @param a O aluno a ser inserido.
-     * @return true se a insercao for bem-sucedida, false se o RA ja existir ou o vetor estiver cheio.
+     * @throws RaDuplicadoException   se ja existir um aluno com o mesmo RA.
+     * @throws CadastroCheioException se nao houver espaco disponivel.
      */
-    public boolean inserir(Aluno a) {
+    public void inserir(Aluno a) throws RaDuplicadoException, CadastroCheioException {
         // Verifica se ja existe um aluno com o mesmo RA
-        for (int j = 0; j < arm.length; j++) {
-            if (arm[j] != null && arm[j].getRa().equals(a.getRa())) {
-                return false; // RA duplicado
+        if (existe(a.getRa())) {
+            throw new RaDuplicadoException();
+        }
+
+        // Procura a primeira posicao livre
+        for (int i = 0; i < alunos.length; i++) {
+            if (alunos[i] == null) {
+                alunos[i] = a;
+                return;
             }
         }
 
-        int i = 0;
-        int tam = arm.length;
-        boolean ctrl = false;
-        
-        while(ctrl != true && i < tam) {
-            
-            if(arm[i] == null) {
-                arm[i] = a;
-                ctrl = true;
-            }
-            
-            i++;
-        }
-        return ctrl; // Retorna true se inseriu, false se o vetor estiver cheio
+        // Nenhuma posicao livre encontrada
+        throw new CadastroCheioException();
     }
 
     /**
-     * Remove um aluno do armazenamento buscando pelo RA.
-     * 
-     * @param ra O RA do aluno a ser removido.
-     * @return true se o aluno for encontrado e removido, false caso contrario.
+     * Remove um aluno buscando pelo RA.
+     *
+     * @param ra RA do aluno a ser removido.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
      */
-    public boolean remover(String ra) {
-        // itera sobre o armazenador
-        for (int i = 0; i < arm.length; i++) {
-            // checa se, p/ aquela posição, o aluno existe e se o RA é igual ao RA buscado.
-            if (arm[i] != null && arm[i].getRa().equals(ra)) {
-                // se for, atribui null
-                arm[i] = null;
-                // retorna true
-                return true;
+    public void remover(String ra) throws RaInexistenteException {
+        for (int i = 0; i < alunos.length; i++) {
+            if (alunos[i] != null && alunos[i].getRa().equals(ra)) {
+                alunos[i] = null;
+                return;
             }
         }
-        // retorna falso por padrão
-        return false;
+        throw new RaInexistenteException();
     }
-    
+
     /**
-     * Atualiza um aluno no armazenamento com base no RA.
-     * 
-     * @param ra O RA do aluno a ser substituido.
-     * @param novoAluno O novo objeto Aluno com as informacoes atualizadas.
-     * @return true se o aluno for encontrado e atualizado, false caso contrario.
+     * Substitui um aluno existente por um novo objeto Aluno.
+     *
+     * @param ra        RA do aluno a ser substituido.
+     * @param novoAluno Novo objeto Aluno com os dados atualizados.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
      */
-    public boolean atualizar(String ra, Aluno novoAluno) {
-        for (int i = 0; i < arm.length; i++) {
-            if (arm[i] != null && arm[i].getRa().equals(ra)) {
-                arm[i] = novoAluno;
-                return true;
+    public void atualizar(String ra, Aluno novoAluno) throws RaInexistenteException {
+        for (int i = 0; i < alunos.length; i++) {
+            if (alunos[i] != null && alunos[i].getRa().equals(ra)) {
+                alunos[i] = novoAluno;
+                return;
             }
         }
-        return false;
+        throw new RaInexistenteException();
     }
-    
+
     /**
-     * Verifica se um aluno com o RA informado existe no vetor.
-     * 
-     * @param ra O RA do aluno a ser buscado.
-     * @return true se o aluno for encontrado, false caso contrario.
+     * Verifica se existe um aluno com o RA informado.
+     *
+     * @param ra RA a ser buscado.
+     * @return true se existir, false caso contrario.
      */
     public boolean existe(String ra) {
-        for (int i = 0; i < arm.length; i++) {
-            if (arm[i] != null && arm[i].getRa().equals(ra)) {
+        if (ra == null) return false;
+        String alvo = ra.trim();
+        for (int i = 0; i < alunos.length; i++) {
+            if (alunos[i] != null && alunos[i].getRa().equals(alvo)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     /**
-     * Lista todos os alunos armazenados no vetor.
-     * 
-     * @param formatoBibliografico Indica se os nomes devem ser impressos no formato bibliografico.
-     * @return Uma string contendo a lista formatada dos alunos.
+     * Lista todos os alunos cadastrados.
+     *
+     * @param formatoBibliografico Se true, exibe nomes em formato bibliografico.
+     * @return String com a listagem formatada (ou aviso, se vazio).
      */
     public String listar(boolean formatoBibliografico) {
         StringBuilder sb = new StringBuilder();
         boolean temAlunos = false;
-        
-        for (int i = 0; i < arm.length; i++) {
-            if (arm[i] != null) {
+
+        for (int i = 0; i < alunos.length; i++) {
+            if (alunos[i] != null) {
                 temAlunos = true;
                 if (formatoBibliografico) {
-                    sb.append(arm[i].getNomeBiblio()).append(" - RA: ").append(arm[i].getRa())
-                      .append(" - Curso: ").append(arm[i].curso)
-                      .append(" - Semestre: ").append(arm[i].semestre).append("\n");
+                    sb.append(alunos[i].getNomeBiblio())
+                      .append(" - RA: ").append(alunos[i].getRa())
+                      .append(" - Curso: ").append(alunos[i].getCurso())
+                      .append(" - Semestre: ").append(alunos[i].getSemestre())
+                      .append("\n");
                 } else {
-                    sb.append(arm[i].toString()).append("\n");
+                    sb.append(alunos[i].toString()).append("\n");
                     sb.append("-----------------------------\n");
                 }
             }
         }
-        
+
         if (!temAlunos) {
             return "Nenhum aluno cadastrado.";
         }
-        
+
         return sb.toString();
     }
 }

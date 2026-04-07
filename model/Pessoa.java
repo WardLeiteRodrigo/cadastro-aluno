@@ -2,7 +2,7 @@
  * Classe que representa uma pessoa com nome e idade.
  * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
+ * @version 1.0 2026/04/07
  */
 package model;
 
@@ -28,6 +28,24 @@ public class Pessoa {
      */
     public String getNomeBiblio(){
         return(nome.getNomeBiblio());
+    }
+
+    /**
+     * Obtem o nome da pessoa.
+     *
+     * @return O nome (texto puro) da pessoa.
+     */
+    public String getNome(){
+        return this.nome.getNome();
+    }
+
+    /**
+     * Obtem a idade da pessoa.
+     *
+     * @return A idade em anos.
+     */
+    public int getIdade(){
+        return this.idade;
     }
 
     /**

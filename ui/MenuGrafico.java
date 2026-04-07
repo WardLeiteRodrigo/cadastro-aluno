@@ -1,45 +1,42 @@
-/**
- * Classe que implementa a interface IMenu fornecendo uma interface grafica.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
 package ui;
 
-import javax.swing.JOptionPane;
-
+/**
+ * Implementacao de {@link IMenu} que delega a entrada/saida para uma
+ * instancia de {@link IIO} (modo grafico). Mantem a logica de montagem
+ * do menu independente do meio de comunicacao com o usuario.
+ *
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
+ * @version 1.0 2026/04/07
+ */
 public class MenuGrafico implements IMenu {
+
+    /** Interface de I/O usada para mostrar e ler a opcao do usuario. */
+    private IIO io;
+
     /**
-     * Cria um menu grafico utilizando JOptionPane.
-     * 
-     * @param opcoes Array de strings com as opcoes do menu.
-     * @return A opcao numerica escolhida pelo usuario.
+     * Cria o menu grafico recebendo a interface de I/O por injecao.
+     *
+     * @param io Interface de I/O (esperado: {@link IOGrafico}).
      */
-    public int criarMenu(String opcoes[]) {
-        int opcao;
-        
-        String itens = "";
-        for (int i = 0; i < opcoes.length; i++){
-            itens = itens + "\n" + opcoes[i];
+    public MenuGrafico(IIO io) {
+        this.io = io;
+    }
+
+    /**
+     * Monta a string do menu e le a opcao do usuario via {@link IIO}.
+     *
+     * @param opcoes Vetor com as opcoes a serem exibidas.
+     * @return A opcao escolhida; em caso de cancelamento retorna 5 (sair).
+     */
+    public int criarMenu(String[] opcoes) {
+        StringBuilder itens = new StringBuilder();
+        for (int i = 0; i < opcoes.length; i++) {
+            itens.append("\n").append(opcoes[i]);
         }
-        
-        itens = itens + "\n\nSelecione a opcao: ";
-        boolean entradaValida = false;
-        opcao = 0;
-        
-        do {
-            try {
-                String input = JOptionPane.showInputDialog(itens);
-                if (input == null) {
-                    return 5; // Se o usuario cancelar, encerra o loop assumindo 'sair'
-                }
-                opcao = Integer.parseInt(input);
-                entradaValida = true;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Entrada invalida. Por favor, digite um numero valido.");
-            }
-        } while (!entradaValida);
-        
-        return opcao;
+        itens.append("\n\nSelecione a opcao:");
+
+        Integer opcao = io.lerInteiro(itens.toString(), 1, opcoes.length);
+        // Se o usuario cancelar, assume "sair" (ultima opcao)
+        return (opcao == null) ? opcoes.length : opcao;
     }
 }

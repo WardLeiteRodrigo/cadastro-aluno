@@ -1,46 +1,42 @@
-/**
- * Classe que implementa a interface IMenu fornecendo uma interface de texto via console.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
 package ui;
 
-import java.util.Scanner;
-
+/**
+ * Implementacao de {@link IMenu} que delega a entrada/saida para uma
+ * instancia de {@link IIO} (modo texto/console). Mantem a logica de
+ * montagem do menu independente do meio de comunicacao com o usuario.
+ *
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
+ * @version 1.0 2026/04/07
+ */
 public class MenuTexto implements IMenu {
+
+    /** Interface de I/O usada para mostrar e ler a opcao do usuario. */
+    private IIO io;
+
     /**
-     * Cria um menu de texto lendo a entrada do console.
-     * 
-     * @param opcoes Array de strings com as opcoes do menu.
-     * @return A opcao numerica escolhida pelo usuario.
+     * Cria o menu de texto recebendo a interface de I/O por injecao.
+     *
+     * @param io Interface de I/O (esperado: {@link IOTexto}).
      */
-    public int criarMenu(String opcoes[]) {
-        int opcao;
-        
-        String itens = "";
-        for (int i = 0; i < opcoes.length; i++){
-            itens = itens + "\n" + opcoes[i];
-            
+    public MenuTexto(IIO io) {
+        this.io = io;
+    }
+
+    /**
+     * Monta a string do menu e le a opcao do usuario via {@link IIO}.
+     *
+     * @param opcoes Vetor com as opcoes a serem exibidas.
+     * @return A opcao escolhida; em caso de cancelamento retorna a ultima
+     *         opcao (assumida como "sair").
+     */
+    public int criarMenu(String[] opcoes) {
+        StringBuilder itens = new StringBuilder();
+        for (int i = 0; i < opcoes.length; i++) {
+            itens.append("\n").append(opcoes[i]);
         }
-        
-        itens = itens + "\n\nSelecione a opcao: ";
+        itens.append("\n\nSelecione a opcao:");
 
-        Scanner sc = new Scanner(System.in);
-        boolean entradaValida = false;
-        opcao = 0;
-
-        do {
-            System.out.print(itens);
-            String s = sc.nextLine();
-            try {
-                opcao = Integer.parseInt(s);
-                entradaValida = true;
-            } catch (NumberFormatException e) {
-                System.out.println("\nEntrada invalida. Por favor, digite um numero valido.\n");
-            }
-        } while (!entradaValida);
-
-        return opcao;
+        Integer opcao = io.lerInteiro(itens.toString(), 1, opcoes.length);
+        return (opcao == null) ? opcoes.length : opcao;
     }
 }
