@@ -18,6 +18,14 @@ import java.util.Scanner;
 
 public class App {
 
+    /**
+     * Le uma string do usuario, dependendo do tipo de menu.
+     * 
+     * @param msg A mensagem a ser exibida para o usuario.
+     * @param tipoMenu O tipo de menu (1 para Grafico, 2 para Texto).
+     * @param sc O scanner a ser utilizado para leitura no console.
+     * @return A string lida, ou null se a operacao for cancelada.
+     */
     private static String lerString(String msg, int tipoMenu, Scanner sc) {
         String input;
         do {
@@ -38,6 +46,12 @@ public class App {
         return input;
     }
 
+    /**
+     * Exibe uma mensagem para o usuario, dependendo do tipo de menu.
+     * 
+     * @param msg A mensagem a ser exibida.
+     * @param tipoMenu O tipo de menu (1 para Grafico, 2 para Texto).
+     */
     private static void mostrarMensagem(String msg, int tipoMenu) {
         if (tipoMenu == 1) {
             javax.swing.JTextArea textArea = new javax.swing.JTextArea(msg);
@@ -50,6 +64,14 @@ public class App {
         }
     }
 
+    /**
+     * Le uma confirmacao do usuario, dependendo do tipo de menu.
+     * 
+     * @param msg A mensagem a ser exibida perguntando pela confirmacao.
+     * @param tipoMenu O tipo de menu (1 para Grafico, 2 para Texto).
+     * @param sc O scanner a ser utilizado para leitura no console.
+     * @return true se o usuario confirmar (sim), false caso contrario.
+     */
     private static boolean lerConfirmacao(String msg, int tipoMenu, Scanner sc) {
         if (tipoMenu == 1) {
             int resp = JOptionPane.showConfirmDialog(null, msg, "Confirmacao", JOptionPane.YES_NO_OPTION);
