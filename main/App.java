@@ -31,7 +31,11 @@ public class App {
 
     private static void mostrarMensagem(String msg, int tipoMenu) {
         if (tipoMenu == 1) {
-            JOptionPane.showMessageDialog(null, msg);
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(msg);
+            textArea.setEditable(false);
+            javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(textArea);
+            scrollPane.setPreferredSize(new java.awt.Dimension(400, 300));
+            JOptionPane.showMessageDialog(null, scrollPane, "Mensagem", JOptionPane.INFORMATION_MESSAGE);
         } else {
             System.out.println(msg);
         }
