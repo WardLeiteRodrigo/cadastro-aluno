@@ -1,83 +1,71 @@
 package main;
 
+import java.io.IOException;
+
 import model.Aluno;
 import storage.IArmazenador;
-import storage.Armazenador;
 import storage.RaDuplicadoException;
 import storage.RaInexistenteException;
 import storage.CadastroCheioException;
 
 /**
  * Fachada que expoe as operacoes de cadastro de alunos delegando ao
- * armazenador subjacente. Mantem o codigo do App desacoplado da
- * estrutura de dados escolhida.
+ * armazenador subjacente. A estrutura de dados e injetada por construtor,
+ * permitindo trocar entre vetor (capacidade fixa) e ArrayList (elastica)
+ * sem alterar o restante do sistema.
  *
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
- * @version 1.0 2026/04/07
+ * @version 1.1 2026/04/27
  */
 public class CadastroAlunos {
 
-    /** Estrutura de armazenamento (programada para a interface). */
     private IArmazenador arm;
 
     /**
-     * Cria um cadastro com capacidade fixa.
+     * Cria um cadastro a partir de uma estrutura de armazenamento ja construida.
      *
-     * @param qtde Capacidade maxima do cadastro.
+     * @param arm Estrutura de armazenamento (vetor ou lista).
      */
-    public CadastroAlunos(int qtde) {
-        this.arm = new Armazenador(qtde);
+    public CadastroAlunos(IArmazenador arm) {
+        this.arm = arm;
     }
 
-    /**
-     * Insere um aluno no cadastro.
-     *
-     * @param a Aluno a ser inserido.
-     * @throws RaDuplicadoException   se ja existir um aluno com o mesmo RA.
-     * @throws CadastroCheioException se o cadastro estiver cheio.
-     */
     public void inserir(Aluno a) throws RaDuplicadoException, CadastroCheioException {
         arm.inserir(a);
     }
 
-    /**
-     * Remove um aluno do cadastro.
-     *
-     * @param ra RA do aluno a ser removido.
-     * @throws RaInexistenteException se nao existir aluno com o RA informado.
-     */
     public void remover(String ra) throws RaInexistenteException {
         arm.remover(ra);
     }
 
-    /**
-     * Atualiza os dados de um aluno existente.
-     *
-     * @param ra        RA do aluno a ser atualizado.
-     * @param novoAluno Novo objeto Aluno com os dados atualizados.
-     * @throws RaInexistenteException se nao existir aluno com o RA informado.
-     */
     public void atualizar(String ra, Aluno novoAluno) throws RaInexistenteException {
         arm.atualizar(ra, novoAluno);
     }
 
-    /**
-     * Verifica se um aluno com o RA especificado existe no cadastro.
-     *
-     * @param ra RA a ser buscado.
-     * @return true se existir, false caso contrario.
-     */
     public boolean existe(String ra) {
         return arm.existe(ra);
     }
 
-    /**
-     * Lista os alunos cadastrados.
-     *
-     * @param formatoBibliografico Se true, formata os nomes bibliograficamente.
-     * @return String com a listagem.
-     */
     public String listar(boolean formatoBibliografico) {
         return arm.listar(formatoBibliografico);
+    }
+
+    /**
+     * Salva o cadastro em um arquivo binario.
+     *
+     * @param nomeArq Caminho completo do arquivo de destino.
+     */
+    public void salvar(String nomeArq) throws IOException {
+        arm.salvar(nomeArq);
+    }
+
+    /**
+     * Carrega o cadastro a partir de um arquivo binario, substituindo os
+     * dados em memoria.
+     *
+     * @param nomeArq Caminho completo do arquivo de origem.
+     */
+    public void carregar(String nomeArq) throws IOException, ClassNotFoundException {
+        arm.carregar(nomeArq);
     }
 }

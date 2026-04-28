@@ -4,34 +4,30 @@ import main.CadastroAlunos;
 import model.Aluno;
 import model.IdadeInvalidaException;
 import model.SemestreInvalidoException;
+import storage.Armazenador;
+import storage.ArmazenadorLista;
+import storage.IArmazenador;
 import storage.RaDuplicadoException;
 import storage.RaInexistenteException;
 import storage.CadastroCheioException;
 
 /**
  * Testes manuais para a classe {@link CadastroAlunos}, exercitando as
- * principais regras de negocio: insercao, remocao, atualizacao,
- * RA duplicado, RA inexistente, cadastro cheio e idade invalida.
+ * principais regras de negocio. A bateria e executada duas vezes: uma
+ * com {@link Armazenador} (vetor) e outra com {@link ArmazenadorLista}
+ * (ArrayList), garantindo que ambas implementacoes respeitam o contrato.
  *
- * Cada teste imprime [OK] ou [FALHOU] no console. Pode ser executado
- * diretamente pelo BlueJ (right-click > void main).
+ * O teste de cadastro cheio so e aplicavel ao vetor (a lista e elastica)
+ * e e pulado quando rodando contra a lista.
  *
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
- * @version 1.0 2026/04/07
+ * @version 2.0 2026/04/27
  */
 public class TestaCadastro {
 
-    /** Contador de testes que passaram. */
     private static int passou = 0;
-    /** Contador de testes que falharam. */
     private static int falhou = 0;
 
-    /**
-     * Marca um teste como passou ou falhou e imprime o resultado.
-     *
-     * @param nome      Nome descritivo do teste.
-     * @param condicao  true se passou, false caso contrario.
-     */
     private static void verificar(String nome, boolean condicao) {
         if (condicao) {
             passou++;
@@ -42,13 +38,6 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Cria um aluno valido para uso nos testes, ignorando a excecao
-     * (que nao deve ocorrer com dados validos).
-     *
-     * @param ra RA do aluno.
-     * @return Objeto Aluno construido.
-     */
     private static Aluno criar(String ra) {
         try {
             return new Aluno("Fulano de Tal", 25, ra, "Computacao", 3);
@@ -60,10 +49,15 @@ public class TestaCadastro {
     }
 
     /**
-     * Testa a insercao basica de um aluno.
+     * Fabrica de cadastros para cada bateria. Recebe a capacidade desejada
+     * (usada apenas pelo vetor) e devolve um cadastro pronto.
      */
-    private static void testInserirOk() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private interface FabricaCadastro {
+        CadastroAlunos novo(int qtde);
+    }
+
+    private static void testInserirOk(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.inserir(criar("RA1"));
             verificar("inserir aluno valido", ca.existe("RA1"));
@@ -72,11 +66,8 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa que inserir RA duplicado lanca {@link RaDuplicadoException}.
-     */
-    private static void testInserirDuplicado() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private static void testInserirDuplicado(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.inserir(criar("RA1"));
             ca.inserir(criar("RA1"));
@@ -88,11 +79,8 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa que insercao em cadastro cheio lanca {@link CadastroCheioException}.
-     */
-    private static void testCadastroCheio() {
-        CadastroAlunos ca = new CadastroAlunos(2);
+    private static void testCadastroCheio(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(2);
         try {
             ca.inserir(criar("RA1"));
             ca.inserir(criar("RA2"));
@@ -105,11 +93,8 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa a remocao de um aluno existente.
-     */
-    private static void testRemoverOk() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private static void testRemoverOk(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.inserir(criar("RA1"));
             ca.remover("RA1");
@@ -119,11 +104,8 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa que remover RA inexistente lanca {@link RaInexistenteException}.
-     */
-    private static void testRemoverInexistente() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private static void testRemoverInexistente(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.remover("RA999");
             verificar("remover RA inexistente deveria lancar excecao", false);
@@ -132,16 +114,12 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa a atualizacao de um aluno existente.
-     */
-    private static void testAtualizarOk() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private static void testAtualizarOk(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.inserir(criar("RA1"));
             Aluno novo = new Aluno("Beltrano Silva", 30, "RA1", "Engenharia", 5);
             ca.atualizar("RA1", novo);
-            // listar deveria conter "Beltrano"
             String lista = ca.listar(false);
             verificar("atualizar aluno existente", lista.contains("Beltrano") && lista.contains("Engenharia"));
         } catch (Exception e) {
@@ -149,11 +127,8 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa que atualizar RA inexistente lanca {@link RaInexistenteException}.
-     */
-    private static void testAtualizarInexistente() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private static void testAtualizarInexistente(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.atualizar("RA999", criar("RA999"));
             verificar("atualizar RA inexistente deveria lancar excecao", false);
@@ -164,9 +139,6 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa que idades fora do intervalo lancam {@link IdadeInvalidaException}.
-     */
     private static void testIdadeInvalida() {
         try {
             new Aluno("Negativo", -1, "RA1", "Curso", 1);
@@ -187,9 +159,6 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa que semestres fora do intervalo lancam {@link SemestreInvalidoException}.
-     */
     private static void testSemestreInvalido() {
         try {
             new Aluno("Fulano", 20, "RA1", "Curso", 0);
@@ -210,11 +179,8 @@ public class TestaCadastro {
         }
     }
 
-    /**
-     * Testa a listagem em formato comum e bibliografico.
-     */
-    private static void testListar() {
-        CadastroAlunos ca = new CadastroAlunos(3);
+    private static void testListar(FabricaCadastro fab) {
+        CadastroAlunos ca = fab.novo(3);
         try {
             ca.inserir(new Aluno("Alan Mathison Turing", 41, "RA1", "Computacao", 5));
             String comum = ca.listar(false);
@@ -225,28 +191,56 @@ public class TestaCadastro {
             verificar("listar (excecao: " + e.getMessage() + ")", false);
         }
 
-        CadastroAlunos vazio = new CadastroAlunos(3);
+        CadastroAlunos vazio = fab.novo(3);
         verificar("listar cadastro vazio", vazio.listar(false).contains("Nenhum"));
     }
 
     /**
-     * Executa todos os testes e exibe o resumo final.
+     * Roda a bateria de testes contra uma fabrica de cadastros especifica.
      *
-     * @param args Argumentos de linha de comando (nao utilizados).
+     * @param nomeED       Nome da estrutura (apenas para o cabecalho).
+     * @param fab          Fabrica que cria o cadastro.
+     * @param suportaCheio true se a estrutura tem capacidade fixa (vetor).
      */
-    public static void main(String[] args) {
-        System.out.println("=== TestaCadastro ===\n");
+    private static void executarBateria(String nomeED, FabricaCadastro fab, boolean suportaCheio) {
+        System.out.println("\n--- Bateria: " + nomeED + " ---");
+        testInserirOk(fab);
+        testInserirDuplicado(fab);
+        if (suportaCheio) {
+            testCadastroCheio(fab);
+        } else {
+            System.out.println("[PULADO]  cadastro cheio (lista e elastica)");
+        }
+        testRemoverOk(fab);
+        testRemoverInexistente(fab);
+        testAtualizarOk(fab);
+        testAtualizarInexistente(fab);
+        testListar(fab);
+    }
 
-        testInserirOk();
-        testInserirDuplicado();
-        testCadastroCheio();
-        testRemoverOk();
-        testRemoverInexistente();
-        testAtualizarOk();
-        testAtualizarInexistente();
+    public static void main(String[] args) {
+        System.out.println("=== TestaCadastro ===");
+
+        // Testes de modelo (independentes da ED)
+        System.out.println("\n--- Validacao do modelo ---");
         testIdadeInvalida();
         testSemestreInvalido();
-        testListar();
+
+        // Bateria contra Armazenador (vetor, com capacidade fixa)
+        executarBateria("Armazenador (vetor)", new FabricaCadastro() {
+            public CadastroAlunos novo(int qtde) {
+                IArmazenador arm = new Armazenador(qtde);
+                return new CadastroAlunos(arm);
+            }
+        }, true);
+
+        // Bateria contra ArmazenadorLista (ArrayList, elastica)
+        executarBateria("ArmazenadorLista (ArrayList)", new FabricaCadastro() {
+            public CadastroAlunos novo(int qtde) {
+                IArmazenador arm = new ArmazenadorLista();
+                return new CadastroAlunos(arm);
+            }
+        }, false);
 
         System.out.println("\n=== Resumo ===");
         System.out.println("Passaram: " + passou);

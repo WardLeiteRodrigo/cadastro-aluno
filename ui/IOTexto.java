@@ -90,6 +90,23 @@ public class IOTexto implements IIO {
     }
 
     /**
+     * Le o caminho de um arquivo via console. Ao salvar, anexa ".dat" se
+     * o usuario nao informar a extensao.
+     *
+     * @param paraSalvar Apenas afeta o texto da pergunta (salvar vs abrir).
+     * @return Caminho digitado ou null se cancelado.
+     */
+    public String escolherArquivo(boolean paraSalvar) {
+        String acao = paraSalvar ? "salvar" : "abrir";
+        String caminho = lerTexto("Caminho do arquivo para " + acao + " (.dat):");
+        if (caminho == null) return null;
+        if (paraSalvar && !caminho.toLowerCase().endsWith(".dat")) {
+            caminho = caminho + ".dat";
+        }
+        return caminho;
+    }
+
+    /**
      * Fecha o Scanner do teclado.
      */
     public void fechar() {

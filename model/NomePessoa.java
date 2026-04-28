@@ -6,7 +6,11 @@
  */
 package model;
 
-public class NomePessoa {
+import java.io.Serializable;
+
+public class NomePessoa implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Texto nome;
 
     /**

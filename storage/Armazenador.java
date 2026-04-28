@@ -1,5 +1,7 @@
 package storage;
 
+import java.io.IOException;
+
 import model.Aluno;
 
 /**
@@ -133,5 +135,27 @@ public class Armazenador implements IArmazenador {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Salva o vetor de alunos em arquivo binario.
+     */
+    public void salvar(String nomeArq) throws IOException {
+        ArquivoBinario ab = new ArquivoBinario(nomeArq);
+        ab.gravarObj(this.alunos);
+    }
+
+    /**
+     * Carrega um vetor de alunos a partir de arquivo binario, substituindo
+     * o conteudo atual. Se o arquivo contiver outro tipo de objeto, lanca
+     * IOException com mensagem amigavel.
+     */
+    public void carregar(String nomeArq) throws IOException, ClassNotFoundException {
+        ArquivoBinario ab = new ArquivoBinario(nomeArq);
+        Object lido = ab.lerObj();
+        if (!(lido instanceof Aluno[])) {
+            throw new IOException("Formato de arquivo incompativel: esperado vetor de Aluno.");
+        }
+        this.alunos = (Aluno[]) lido;
     }
 }

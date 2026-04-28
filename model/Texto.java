@@ -6,7 +6,11 @@
  */
 package model;
 
-public class Texto {
+import java.io.Serializable;
+
+public class Texto implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String txt;
 
     /**

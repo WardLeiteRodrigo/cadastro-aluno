@@ -13,6 +13,8 @@ package model;
  */
 public class Aluno extends Pessoa {
 
+    private static final long serialVersionUID = 1L;
+
     /** Idade minima permitida para um aluno. */
     public static final int IDADE_MIN = 0;
 
