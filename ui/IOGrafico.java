@@ -157,7 +157,12 @@ public class IOGrafico implements IIO {
         painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel lbl = new JLabel(rotulo, SwingConstants.LEFT);
+        // JLabel ignora \n em texto puro; converte para HTML para preservar quebras de linha
+        String html = "<html>" + rotulo.replace("&", "&amp;")
+                                       .replace("<", "&lt;")
+                                       .replace(">", "&gt;")
+                                       .replace("\n", "<br>") + "</html>";
+        JLabel lbl = new JLabel(html, SwingConstants.LEFT);
         lbl.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         campo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 
