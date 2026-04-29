@@ -49,6 +49,16 @@ public interface IIO {
     void mostrar(String msg);
 
     /**
+     * Solicita ao usuario o caminho de um arquivo (para abrir ou salvar).
+     * No modo grafico abre um JFileChooser; no modo texto pede o caminho
+     * via teclado.
+     *
+     * @param paraSalvar true para dialogo de salvar, false para dialogo de abrir.
+     * @return Caminho completo escolhido, ou {@code null} se o usuario cancelar.
+     */
+    String escolherArquivo(boolean paraSalvar);
+
+    /**
      * Libera os recursos utilizados pela implementacao (ex.: Scanner).
      * Deve ser chamado ao encerrar o programa.
      */

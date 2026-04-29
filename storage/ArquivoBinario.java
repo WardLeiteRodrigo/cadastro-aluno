@@ -1,64 +1,56 @@
 package storage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
- * @author julio
- * Classe para gravar e ler arquivo binario
+ * Utilitario de gravacao e leitura de objetos em arquivo binario, usando
+ * ObjectOutputStream / ObjectInputStream. Generico: trabalha com qualquer
+ * objeto Serializable. Os erros sao relancados como IOException /
+ * ClassNotFoundException para que a camada de UI possa exibir mensagens
+ * amigaveis.
+ *
+ * @author julio (original), adaptada por Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
  */
-public class ArquivoBinario{
-    
-    String nomeArq;
-    
-    ArquivoBinario(String nomeArq){
+public class ArquivoBinario {
+
+    private final String nomeArq;
+
+    /**
+     * @param nomeArq Caminho completo do arquivo a ser usado nas operacoes.
+     */
+    public ArquivoBinario(String nomeArq) {
         this.nomeArq = nomeArq;
     }
 
     /**
-     * Method gravarObj grava um objeto em arquivo
+     * Grava um objeto serializavel em arquivo.
      *
-     * @param objeto objeto a ser gravado
-     * @param nomeArq nome do arquivo
+     * @param objeto Objeto a ser gravado (deve implementar Serializable).
+     * @throws IOException em caso de falha de I/O.
      */
-    public void gravarObj(Object objeto){
-        ObjectOutputStream output = null;
-        try {
-            File file = new File(this.nomeArq);
-            output = new ObjectOutputStream(new FileOutputStream(file));
-            output.writeObject(objeto);  // escreve o objeto no arquivo
-        } catch(Exception e){
-            System.out.println(e.toString());
-        } finally {
-            try {
-                output.close();
-            } catch(Exception ex) {
-                // Nao faz nada!
-            }
+    public void gravarObj(Object objeto) throws IOException {
+        File file = new File(this.nomeArq);
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(file))) {
+            output.writeObject(objeto);
         }
     }
 
     /**
-     * Method lerObj
+     * Le um objeto serializavel previamente gravado em arquivo.
      *
-     * @param nomeArq nome do arquivo a ser lido
-     * @return Object o objeto lido
+     * @return O objeto lido (cabe ao chamador fazer o cast).
+     * @throws IOException            em caso de falha de I/O.
+     * @throws ClassNotFoundException se a classe do objeto nao for encontrada.
      */
-    public Object lerObj(){
-        Object objeto = null;
-        ObjectInputStream input = null;
-        try {
-            File file = new File(this.nomeArq);
-            input = new ObjectInputStream(new FileInputStream(file));
-            objeto = (Object)input.readObject();  // le o objeto do arquivo
+    public Object lerObj() throws IOException, ClassNotFoundException {
+        File file = new File(this.nomeArq);
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+            return input.readObject();
         }
-        catch(Exception e){
-            System.out.println(e.toString());
-        } finally {
-            try {
-                input.close();
-            } catch(Exception ex) {
-                // Nao faz nada!
-            }
-        }
-        return objeto;
     }
 }

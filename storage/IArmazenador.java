@@ -1,5 +1,7 @@
 package storage;
 
+import java.io.IOException;
+
 import model.Aluno;
 
 /**
@@ -53,4 +55,22 @@ public interface IArmazenador {
      * @return Uma string com a listagem formatada (ou aviso, se vazio).
      */
     String listar(boolean formatoBibliografico);
+
+    /**
+     * Persiste o conteudo do armazenador em um arquivo binario.
+     *
+     * @param nomeArq Caminho completo do arquivo de destino.
+     * @throws IOException em caso de falha de I/O.
+     */
+    void salvar(String nomeArq) throws IOException;
+
+    /**
+     * Carrega o conteudo do armazenador a partir de um arquivo binario.
+     * Substitui completamente os dados atualmente em memoria.
+     *
+     * @param nomeArq Caminho completo do arquivo de origem.
+     * @throws IOException            em caso de falha de I/O.
+     * @throws ClassNotFoundException se a classe dos objetos serializados nao for encontrada.
+     */
+    void carregar(String nomeArq) throws IOException, ClassNotFoundException;
 }
