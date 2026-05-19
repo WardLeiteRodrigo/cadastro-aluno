@@ -2,12 +2,9 @@ package main;
 
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
 import model.Aluno;
 import model.IdadeInvalidaException;
 import model.SemestreInvalidoException;
-import storage.Armazenador;
 import storage.ArmazenadorLista;
 import storage.CadastroCheioException;
 import storage.IArmazenador;
@@ -16,59 +13,26 @@ import storage.RaInexistenteException;
 import ui.IIO;
 import ui.IMenu;
 import ui.IOGrafico;
-import ui.IOTexto;
 import ui.MenuGrafico;
-import ui.MenuTexto;
 
 /**
- * Classe principal do sistema de cadastro de alunos. Pergunta o modo de
- * interacao (grafico/texto), a estrutura de dados (vetor/lista) e oferece
- * um menu com as operacoes de inserir, remover, listar, atualizar,
- * salvar/carregar arquivo e sair.
+ * Classe principal do sistema de cadastro de alunos. Utiliza modo grafico
+ * e lista ligada como estrutura de dados padrao. Oferece um menu com as
+ * operacoes de inserir, remover, listar, atualizar, salvar/carregar
+ * arquivo e sair.
  *
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
- * @version 2.0 2026/04/27
+ * @version 3.0 2026/05/19
  */
 public class App {
 
-    private static int escolherModo() {
-        while (true) {
-            try {
-                String input = JOptionPane.showInputDialog(
-                    "Qual o tipo de menu desejado? (Grafico = 1 ou Texto = 2): ");
-                if (input == null) return -1;
-                int v = Integer.parseInt(input.trim());
-                if (v == 1 || v == 2) return v;
-                JOptionPane.showMessageDialog(null,
-                    "Valor invalido. Digite 1 para Grafico ou 2 para Texto.");
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                    "Entrada invalida. Por favor, digite um numero valido.");
-            }
-        }
-    }
-
     /**
-     * Pergunta ao usuario qual estrutura de dados usar e ja constroi o
-     * armazenador correspondente. Para o vetor pede a capacidade; para a
-     * lista nao precisa, pois a capacidade e elastica.
+     * Pre-popula o cadastro com tres alunos de exemplo para facilitar
+     * os testes durante a apresentacao.
      *
-     * @return Armazenador pronto para uso, ou null se o usuario cancelar.
+     * @param ca Cadastro a ser pre-populado.
+     * @param io Interface de I/O para exibir avisos, se necessario.
      */
-    private static IArmazenador escolherED(IIO io) {
-        Integer tipo = io.lerInteiro(
-            "Estrutura de dados:\n1 - Vetor (capacidade fixa)\n2 - Lista (ArrayList - elastica)",
-            1, 2);
-        if (tipo == null) return null;
-
-        if (tipo == 1) {
-            Integer qtde = io.lerInteiro("Forneca a quantidade de alunos:", 1, 1000);
-            if (qtde == null) return null;
-            return new Armazenador(qtde);
-        }
-        return new ArmazenadorLista();
-    }
-
     private static void prepopular(CadastroAlunos ca, IIO io) {
         try {
             ca.inserir(new Aluno("Alan Mathison Turing", 41, "RA1001", "Ciencia da Computacao", 5));
@@ -77,7 +41,7 @@ public class App {
         } catch (CadastroCheioException e) {
             io.mostrar("Aviso: cadastro pequeno demais para os alunos de exemplo.");
         } catch (RaDuplicadoException e) {
-            // ignorado
+            // ignorado: dados de exemplo nao possuem RAs duplicados
         } catch (IdadeInvalidaException e) {
             // dados internos validos; nao deve ocorrer
         } catch (SemestreInvalidoException e) {
@@ -85,6 +49,12 @@ public class App {
         }
     }
 
+    /**
+     * Solicita ao usuario os dados de um novo aluno e o insere no cadastro.
+     *
+     * @param ca Cadastro onde o aluno sera inserido.
+     * @param io Interface de I/O para leitura e exibicao de mensagens.
+     */
     private static void operacaoInserir(CadastroAlunos ca, IIO io) {
         String nome = io.lerTexto("Nome:");
         if (nome == null) return;
@@ -118,6 +88,12 @@ public class App {
         }
     }
 
+    /**
+     * Solicita um RA ao usuario e remove o aluno correspondente do cadastro.
+     *
+     * @param ca Cadastro de onde o aluno sera removido.
+     * @param io Interface de I/O para leitura e exibicao de mensagens.
+     */
     private static void operacaoRemover(CadastroAlunos ca, IIO io) {
         String ra = io.lerTexto("RA a ser removido:");
         if (ra == null) return;
@@ -132,6 +108,12 @@ public class App {
         }
     }
 
+    /**
+     * Lista todos os alunos cadastrados no formato escolhido pelo usuario.
+     *
+     * @param ca Cadastro a ser listado.
+     * @param io Interface de I/O para leitura e exibicao de mensagens.
+     */
     private static void operacaoListar(CadastroAlunos ca, IIO io) {
         try {
             boolean biblio = io.lerConfirmacao("Deseja listar no formato bibliografico?");
@@ -141,6 +123,13 @@ public class App {
         }
     }
 
+    /**
+     * Solicita um RA e os novos dados ao usuario, atualizando o aluno
+     * correspondente no cadastro.
+     *
+     * @param ca Cadastro onde o aluno sera atualizado.
+     * @param io Interface de I/O para leitura e exibicao de mensagens.
+     */
     private static void operacaoAtualizar(CadastroAlunos ca, IIO io) {
         String ra = io.lerTexto("RA do aluno a ser atualizado:");
         if (ra == null) return;
@@ -177,6 +166,12 @@ public class App {
         }
     }
 
+    /**
+     * Solicita um caminho de arquivo ao usuario e salva o cadastro atual.
+     *
+     * @param ca Cadastro a ser salvo.
+     * @param io Interface de I/O para leitura e exibicao de mensagens.
+     */
     private static void operacaoSalvar(CadastroAlunos ca, IIO io) {
         String caminho = io.escolherArquivo(true);
         if (caminho == null) return;
@@ -190,6 +185,13 @@ public class App {
         }
     }
 
+    /**
+     * Solicita um caminho de arquivo ao usuario e carrega o cadastro a
+     * partir dele, substituindo os dados em memoria.
+     *
+     * @param ca Cadastro a ser substituido pelos dados do arquivo.
+     * @param io Interface de I/O para leitura e exibicao de mensagens.
+     */
     private static void operacaoCarregar(CadastroAlunos ca, IIO io) {
         String caminho = io.escolherArquivo(false);
         if (caminho == null) return;
@@ -207,22 +209,21 @@ public class App {
         }
     }
 
+    /**
+     * Ponto de entrada da aplicacao. Inicializa o modo grafico e a lista
+     * ligada como estrutura de dados, pre-popula o cadastro com exemplos
+     * e exibe o menu principal ate o usuario optar por sair.
+     *
+     * @param args Argumentos de linha de comando (nao utilizados).
+     */
     public static void main(String[] args) {
-        int modo = escolherModo();
-        if (modo == -1) return;
-
-        IIO io = (modo == 1) ? new IOGrafico() : new IOTexto();
-
-        IArmazenador arm = escolherED(io);
-        if (arm == null) {
-            io.fechar();
-            return;
-        }
-
+        // Modo grafico e lista ligada sao os padroes fixos do sistema
+        IIO io = new IOGrafico();
+        IArmazenador arm = new ArmazenadorLista();
         CadastroAlunos ca = new CadastroAlunos(arm);
         prepopular(ca, io);
 
-        IMenu mn = (modo == 1) ? new MenuGrafico(io) : new MenuTexto(io);
+        IMenu mn = new MenuGrafico(io);
 
         String[] itensMenu = {
             "1 - inserir",
