@@ -27,29 +27,6 @@ import ui.MenuGrafico;
 public class App {
 
     /**
-     * Pre-popula o cadastro com tres alunos de exemplo para facilitar
-     * os testes durante a apresentacao.
-     *
-     * @param ca Cadastro a ser pre-populado.
-     * @param io Interface de I/O para exibir avisos, se necessario.
-     */
-    private static void prepopular(CadastroAlunos ca, IIO io) {
-        try {
-            ca.inserir(new Aluno("Alan Mathison Turing", 41, "RA1001", "Ciencia da Computacao", 5));
-            ca.inserir(new Aluno("Ada Augusta Lovelace", 36, "RA1002", "Matematica", 8));
-            ca.inserir(new Aluno("Grace Murray Hopper", 85, "RA1003", "Sistemas de Informacao", 6));
-        } catch (CadastroCheioException e) {
-            io.mostrar("Aviso: cadastro pequeno demais para os alunos de exemplo.");
-        } catch (RaDuplicadoException e) {
-            // ignorado: dados de exemplo nao possuem RAs duplicados
-        } catch (IdadeInvalidaException e) {
-            // dados internos validos; nao deve ocorrer
-        } catch (SemestreInvalidoException e) {
-            // dados internos validos; nao deve ocorrer
-        }
-    }
-
-    /**
      * Solicita ao usuario os dados de um novo aluno e o insere no cadastro.
      *
      * @param ca Cadastro onde o aluno sera inserido.
@@ -221,7 +198,6 @@ public class App {
         IIO io = new IOGrafico();
         IArmazenador arm = new ArmazenadorLista();
         CadastroAlunos ca = new CadastroAlunos(arm);
-        prepopular(ca, io);
 
         IMenu mn = new MenuGrafico(io);
 
