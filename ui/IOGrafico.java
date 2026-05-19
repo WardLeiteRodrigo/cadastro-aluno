@@ -147,6 +147,74 @@ public class IOGrafico implements IIO {
         // sem recursos a liberar
     }
 
+    /**
+     * Le um texto com o campo pre-preenchido com o valor atual.
+     * O usuario pode editar diretamente ou confirmar sem alterar.
+     *
+     * @param msg        Rotulo do campo.
+     * @param valorAtual Valor a ser exibido pre-preenchido no JTextField.
+     * @return Texto digitado (ou o valor atual se nao alterado), ou
+     *         null se cancelado.
+     */
+    public String lerTexto(String msg, String valorAtual) {
+        while (true) {
+            String[] resultado = new String[1];
+            JTextField campo = new JTextField(20);
+            if (valorAtual != null) {
+                campo.setText(valorAtual);
+                campo.selectAll();
+            }
+            JPanel painel = montarPainelCampo(msg, campo);
+
+            boolean ok = exibirDialogo("Entrada", painel, campo, new Runnable() {
+                public void run() {
+                    resultado[0] = campo.getText();
+                }
+            });
+
+            if (!ok) return null;
+            if (resultado[0] == null || resultado[0].trim().isEmpty()) {
+                mostrar("Entrada invalida. O valor nao pode ser vazio.");
+                continue;
+            }
+            return resultado[0].trim();
+        }
+    }
+
+    /**
+     * Le um inteiro com o spinner ja posicionado no valor atual.
+     * O usuario pode ajustar o valor ou confirmar sem alterar.
+     *
+     * @param msg        Rotulo do campo.
+     * @param min        Valor minimo aceito.
+     * @param max        Valor maximo aceito.
+     * @param valorAtual Valor a ser exibido como inicial no JSpinner.
+     * @return Inteiro lido (ou o valor atual se nao alterado), ou
+     *         null se cancelado.
+     */
+    public Integer lerInteiro(String msg, int min, int max, int valorAtual) {
+        int inicial = (valorAtual >= min && valorAtual <= max) ? valorAtual : min;
+        SpinnerNumberModel modelo = new SpinnerNumberModel(inicial, min, max, 1);
+        JSpinner spinner = new JSpinner(modelo);
+        spinner.setPreferredSize(new Dimension(120, 26));
+
+        JPanel painel = montarPainelCampo(msg + " (" + min + " a " + max + ")", spinner);
+        Integer[] resultado = new Integer[1];
+
+        boolean ok = exibirDialogo("Entrada", painel, spinner, new Runnable() {
+            public void run() {
+                try {
+                    spinner.commitEdit();
+                } catch (Exception ignored) {
+                    // valor parcial; usa o ultimo valido
+                }
+                resultado[0] = (Integer) spinner.getValue();
+            }
+        });
+
+        return ok ? resultado[0] : null;
+    }
+
     // ----------------- helpers privados -----------------
 
     /**

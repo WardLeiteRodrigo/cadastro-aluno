@@ -49,6 +49,14 @@ public interface IArmazenador {
     boolean existe(String ra);
 
     /**
+     * Busca e retorna um aluno pelo RA.
+     *
+     * @param ra O RA a ser buscado.
+     * @return O aluno encontrado, ou {@code null} se nao existir.
+     */
+    Aluno buscar(String ra);
+
+    /**
      * Lista todos os alunos armazenados.
      *
      * @param formatoBibliografico Se true, formata os nomes em estilo bibliografico.

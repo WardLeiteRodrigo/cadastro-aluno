@@ -105,6 +105,23 @@ public class Armazenador implements IArmazenador {
     }
 
     /**
+     * Busca e retorna um aluno pelo RA no vetor.
+     *
+     * @param ra RA a ser buscado.
+     * @return O aluno encontrado, ou {@code null} se nao existir.
+     */
+    public Aluno buscar(String ra) {
+        if (ra == null) return null;
+        String alvo = ra.trim();
+        for (int i = 0; i < alunos.length; i++) {
+            if (alunos[i] != null && alunos[i].getRa().equals(alvo)) {
+                return alunos[i];
+            }
+        }
+        return null;
+    }
+
+    /**
      * Lista todos os alunos cadastrados.
      *
      * @param formatoBibliografico Se true, exibe nomes em formato bibliografico.

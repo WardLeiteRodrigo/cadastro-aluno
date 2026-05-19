@@ -101,8 +101,8 @@ public class App {
     }
 
     /**
-     * Solicita um RA e os novos dados ao usuario, atualizando o aluno
-     * correspondente no cadastro.
+     * Busca o aluno pelo RA, exibe seus dados atuais pre-preenchidos em cada
+     * campo e persiste apenas o que o usuario alterar.
      *
      * @param ca Cadastro onde o aluno sera atualizado.
      * @param io Interface de I/O para leitura e exibicao de mensagens.
@@ -111,21 +111,23 @@ public class App {
         String ra = io.lerTexto("RA do aluno a ser atualizado:");
         if (ra == null) return;
 
-        if (!ca.existe(ra)) {
+        Aluno atual = ca.buscar(ra);
+        if (atual == null) {
             io.mostrar("Erro: RA nao encontrado.\n\nAlunos disponiveis:\n" + ca.listar(false));
             return;
         }
 
-        String nome = io.lerTexto("Novo nome:");
+        // Cada campo e exibido pre-preenchido; o usuario altera so o que quiser
+        String nome = io.lerTexto("Nome:", atual.getNome());
         if (nome == null) return;
 
-        Integer idade = io.lerInteiro("Nova idade:", Aluno.IDADE_MIN, Aluno.IDADE_MAX);
+        Integer idade = io.lerInteiro("Idade:", Aluno.IDADE_MIN, Aluno.IDADE_MAX, atual.getIdade());
         if (idade == null) return;
 
-        String curso = io.lerTexto("Novo curso:");
+        String curso = io.lerTexto("Curso:", atual.getCurso());
         if (curso == null) return;
 
-        Integer semestre = io.lerInteiro("Novo semestre:", Aluno.SEMESTRE_MIN, Aluno.SEMESTRE_MAX);
+        Integer semestre = io.lerInteiro("Semestre:", Aluno.SEMESTRE_MIN, Aluno.SEMESTRE_MAX, atual.getSemestre());
         if (semestre == null) return;
 
         try {

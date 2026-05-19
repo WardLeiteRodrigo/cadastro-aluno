@@ -168,6 +168,25 @@ public class ArmazenadorLista implements IArmazenador {
     }
 
     /**
+     * Busca e retorna um aluno pelo RA percorrendo a lista ligada.
+     *
+     * @param ra RA a ser buscado.
+     * @return O aluno encontrado, ou {@code null} se nao existir.
+     */
+    public Aluno buscar(String ra) {
+        if (ra == null) return null;
+        String alvo = ra.trim();
+        No atual = this.cabeca;
+        while (atual != null) {
+            if (atual.dado.getRa().equals(alvo)) {
+                return atual.dado;
+            }
+            atual = atual.proximo;
+        }
+        return null;
+    }
+
+    /**
      * Lista todos os alunos percorrendo a lista do inicio ao fim.
      *
      * @param formatoBibliografico Se true, exibe nomes em formato bibliografico.

@@ -63,4 +63,36 @@ public interface IIO {
      * Deve ser chamado ao encerrar o programa.
      */
     void fechar();
+
+    /**
+     * Le um texto com um valor padrao pre-preenchido. Ao confirmar sem
+     * alterar, retorna o proprio {@code valorAtual}.
+     * Implementacoes devem exibir o valor atual para facilitar a edicao
+     * parcial do registro.
+     *
+     * @param msg        Mensagem a ser exibida.
+     * @param valorAtual Valor atual do campo (sera exibido pre-preenchido).
+     * @return O texto informado, o valor atual se nao alterado, ou
+     *         {@code null} se o usuario cancelar.
+     */
+    default String lerTexto(String msg, String valorAtual) {
+        return lerTexto(msg);
+    }
+
+    /**
+     * Le um inteiro com um valor padrao pre-preenchido. Ao confirmar sem
+     * alterar, retorna o proprio {@code valorAtual}.
+     * Implementacoes devem exibir o valor atual no campo para facilitar
+     * a edicao parcial do registro.
+     *
+     * @param msg        Mensagem a ser exibida.
+     * @param min        Valor minimo aceito.
+     * @param max        Valor maximo aceito.
+     * @param valorAtual Valor atual do campo.
+     * @return O inteiro informado, o valor atual se nao alterado, ou
+     *         {@code null} se o usuario cancelar.
+     */
+    default Integer lerInteiro(String msg, int min, int max, int valorAtual) {
+        return lerInteiro(msg, min, max);
+    }
 }

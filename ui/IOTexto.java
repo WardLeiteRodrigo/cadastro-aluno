@@ -114,4 +114,53 @@ public class IOTexto implements IIO {
             sc.close();
         }
     }
+
+    /**
+     * Le um texto mostrando o valor atual no prompt. Aceitar Enter vazio
+     * mantem o valor atual sem precisar redigita-lo.
+     *
+     * @param msg        Mensagem a ser exibida.
+     * @param valorAtual Valor atual do campo, exibido como referencia.
+     * @return O texto digitado, o valor atual se Enter vazio, ou null se
+     *         o usuario digitar "cancelar".
+     */
+    public String lerTexto(String msg, String valorAtual) {
+        System.out.print(msg + " (atual: \"" + valorAtual + "\" | Enter para manter | ou 'cancelar'): ");
+        String input = sc.nextLine();
+        if (input.trim().equalsIgnoreCase(CANCELAR)) return null;
+        // Enter vazio = manter valor atual
+        if (input.trim().isEmpty()) return valorAtual;
+        return input.trim();
+    }
+
+    /**
+     * Le um inteiro mostrando o valor atual no prompt. Aceitar Enter vazio
+     * mantem o valor atual sem precisar redigita-lo.
+     *
+     * @param msg        Mensagem a ser exibida.
+     * @param min        Valor minimo aceito.
+     * @param max        Valor maximo aceito.
+     * @param valorAtual Valor atual do campo, exibido como referencia.
+     * @return O inteiro digitado, o valor atual se Enter vazio, ou null se
+     *         o usuario digitar "cancelar".
+     */
+    public Integer lerInteiro(String msg, int min, int max, int valorAtual) {
+        while (true) {
+            System.out.print(msg + " (atual: " + valorAtual
+                + " | " + min + "-" + max + " | Enter para manter | ou 'cancelar'): ");
+            String input = sc.nextLine();
+            if (input.trim().equalsIgnoreCase(CANCELAR)) return null;
+            // Enter vazio = manter valor atual
+            if (input.trim().isEmpty()) return valorAtual;
+            try {
+                int valor = Integer.parseInt(input.trim());
+                if (valor >= min && valor <= max) {
+                    return valor;
+                }
+                mostrar("Valor fora do intervalo permitido (" + min + " a " + max + ").");
+            } catch (NumberFormatException e) {
+                mostrar("Entrada invalida. Por favor, digite um numero inteiro.");
+            }
+        }
+    }
 }

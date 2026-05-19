@@ -46,6 +46,16 @@ public class CadastroAlunos {
         return arm.existe(ra);
     }
 
+    /**
+     * Busca e retorna um aluno pelo RA.
+     *
+     * @param ra RA a ser buscado.
+     * @return O aluno correspondente, ou {@code null} se nao encontrado.
+     */
+    public Aluno buscar(String ra) {
+        return arm.buscar(ra);
+    }
+
     public String listar(boolean formatoBibliografico) {
         return arm.listar(formatoBibliografico);
     }
