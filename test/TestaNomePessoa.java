@@ -12,6 +12,13 @@ import javax.swing.JOptionPane;
  * @version 1.0 2026/03/19
  */
 public class TestaNomePessoa {
+
+    /**
+     * Classe de teste manual: nao deve ser instanciada.
+     */
+    private TestaNomePessoa() {
+    }
+
     /**
      * Ponto de entrada do teste manual. Le um nome digitado pelo usuario e
      * exibe no console as variacoes geradas por {@link NomePessoa}.
@@ -19,7 +26,7 @@ public class TestaNomePessoa {
      * @param args Argumentos de linha de comando (nao utilizados).
      */
     public static void main(String[] args) {
-        String nomePessoa = JOptionPane.showInputDialog("Forneça um nome: ");
+        String nomePessoa = JOptionPane.showInputDialog("Forneca um nome: ");
 
         NomePessoa nome = new NomePessoa(nomePessoa);
 

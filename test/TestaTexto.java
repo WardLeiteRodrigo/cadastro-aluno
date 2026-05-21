@@ -12,6 +12,13 @@ import javax.swing.JOptionPane;
  * @version 1.0 2026/03/17
  */
 public class TestaTexto {
+
+    /**
+     * Classe de teste manual: nao deve ser instanciada.
+     */
+    private TestaTexto() {
+    }
+
     /**
      * Ponto de entrada do teste manual. Le um texto digitado pelo usuario e
      * exibe no console suas variacoes geradas por {@link Texto}.
@@ -19,7 +26,7 @@ public class TestaTexto {
      * @param args Argumentos de linha de comando (nao utilizados).
      */
     public static void main(String[] args) {
-        String texto = JOptionPane.showInputDialog("Forneça um texto: ");
+        String texto = JOptionPane.showInputDialog("Forneca um texto: ");
 
         Texto txt = new Texto(texto);
 

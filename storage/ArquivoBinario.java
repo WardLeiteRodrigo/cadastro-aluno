@@ -21,6 +21,8 @@ public class ArquivoBinario {
     private final String nomeArq;
 
     /**
+     * Cria um utilitario associado ao caminho de arquivo informado.
+     *
      * @param nomeArq Caminho completo do arquivo a ser usado nas operacoes.
      */
     public ArquivoBinario(String nomeArq) {

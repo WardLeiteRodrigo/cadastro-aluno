@@ -13,6 +13,13 @@ import model.SemestreInvalidoException;
  * @version 1.0 2026/03/19
  */
 public class TestaAluno {
+
+    /**
+     * Classe de teste manual: nao deve ser instanciada.
+     */
+    private TestaAluno() {
+    }
+
     /**
      * Ponto de entrada do teste manual. Cria uma instancia de {@link Aluno}
      * e imprime no console seu {@code toString()} e seu nome bibliografico.

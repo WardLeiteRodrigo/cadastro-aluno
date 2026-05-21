@@ -39,6 +39,12 @@ import java.io.File;
 public class IOGrafico implements IIO {
 
     /**
+     * Cria a interface grafica de entrada e saida.
+     */
+    public IOGrafico() {
+    }
+
+    /**
      * Le um texto nao vazio em um JDialog modal com JTextField.
      *
      * @param msg Rotulo do campo (ex.: "Nome:").

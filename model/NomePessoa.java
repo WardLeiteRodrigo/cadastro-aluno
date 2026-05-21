@@ -1,16 +1,17 @@
-/**
- * Classe que representa o nome de uma pessoa e fornece metodos de manipulacao de string.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
 package model;
 
 import java.io.Serializable;
 
+/**
+ * Classe que representa o nome de uma pessoa e fornece metodos de manipulacao de string.
+ * 
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
+ * @version 1.0 2026/03/24
+ */
 public class NomePessoa implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Texto que armazena e normaliza o nome completo. */
     private Texto nome;
 
     /**

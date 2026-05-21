@@ -27,6 +27,12 @@ import ui.MenuGrafico;
 public class App {
 
     /**
+     * Classe utilitaria: nao deve ser instanciada.
+     */
+    private App() {
+    }
+
+    /**
      * Solicita ao usuario os dados de um novo aluno e o insere no cadastro.
      *
      * @param ca Cadastro onde o aluno sera inserido.
@@ -190,8 +196,8 @@ public class App {
 
     /**
      * Ponto de entrada da aplicacao. Inicializa o modo grafico e a lista
-     * ligada como estrutura de dados, pre-popula o cadastro com exemplos
-     * e exibe o menu principal ate o usuario optar por sair.
+     * ligada como estrutura de dados e exibe o menu principal ate o usuario
+     * optar por sair.
      *
      * @param args Argumentos de linha de comando (nao utilizados).
      */

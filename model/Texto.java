@@ -1,16 +1,17 @@
-/**
- * Classe utilitaria para manipulacao de textos, incluindo remocao de espacos excedentes e inversao.
- * 
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 24/03/2026
- */
 package model;
 
 import java.io.Serializable;
 
+/**
+ * Classe utilitaria para manipulacao de textos, incluindo remocao de espacos excedentes e inversao.
+ * 
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
+ * @version 1.0 2026/03/24
+ */
 public class Texto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Texto armazenado apos normalizacao de espacos. */
     private String txt;
 
     /**

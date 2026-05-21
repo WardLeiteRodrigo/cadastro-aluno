@@ -11,6 +11,13 @@ import java.io.*;
  * @version 1.0 2026/04/27
  */
 public class GravarArray {
+
+    /**
+     * Classe de exemplo: nao deve ser instanciada.
+     */
+    private GravarArray() {
+    }
+
     /**
      * Ponto de entrada do exemplo: cria um array de pessoas, grava-o em
      * arquivo binario e em seguida le o conteudo de volta para a memoria,

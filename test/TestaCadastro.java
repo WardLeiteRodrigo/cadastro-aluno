@@ -15,7 +15,7 @@ import storage.CadastroCheioException;
  * Testes manuais para a classe {@link CadastroAlunos}, exercitando as
  * principais regras de negocio. A bateria e executada duas vezes: uma
  * com {@link Armazenador} (vetor) e outra com {@link ArmazenadorLista}
- * (ArrayList), garantindo que ambas implementacoes respeitam o contrato.
+ * (lista ligada), garantindo que ambas implementacoes respeitam o contrato.
  *
  * O teste de cadastro cheio so e aplicavel ao vetor (a lista e elastica)
  * e e pulado quando rodando contra a lista.
@@ -25,17 +25,23 @@ import storage.CadastroCheioException;
  */
 public class TestaCadastro {
 
-    /** Contador de asserções que passaram durante a execução das baterias. */
+    /**
+     * Classe de teste manual: nao deve ser instanciada.
+     */
+    private TestaCadastro() {
+    }
+
+    /** Contador de assercoes que passaram durante a execucao das baterias. */
     private static int passou = 0;
-    /** Contador de asserções que falharam durante a execução das baterias. */
+    /** Contador de assercoes que falharam durante a execucao das baterias. */
     private static int falhou = 0;
 
     /**
-     * Registra o resultado de uma asserção, atualizando os contadores
+     * Registra o resultado de uma assercao, atualizando os contadores
      * {@link #passou} ou {@link #falhou} e imprimindo o desfecho no console.
      *
      * @param nome     Descricao curta do caso de teste sendo verificado.
-     * @param condicao Resultado da asserção: {@code true} para sucesso,
+     * @param condicao Resultado da assercao: {@code true} para sucesso,
      *                 {@code false} para falha.
      */
     private static void verificar(String nome, boolean condicao) {
@@ -301,7 +307,7 @@ public class TestaCadastro {
      * modelo (idade e semestre) e em seguida roda a bateria completa contra
      * as duas implementacoes de {@link IArmazenador}: {@link Armazenador}
      * (vetor) e {@link ArmazenadorLista} (lista ligada). Ao final, imprime
-     * o total de asserções que passaram e falharam.
+     * o total de assercoes que passaram e falharam.
      *
      * @param args Argumentos de linha de comando (nao utilizados).
      */
@@ -321,8 +327,8 @@ public class TestaCadastro {
             }
         }, true);
 
-        // Bateria contra ArmazenadorLista (ArrayList, elastica)
-        executarBateria("ArmazenadorLista (ArrayList)", new FabricaCadastro() {
+        // Bateria contra ArmazenadorLista (lista ligada, elastica)
+        executarBateria("ArmazenadorLista (lista ligada)", new FabricaCadastro() {
             public CadastroAlunos novo(int qtde) {
                 IArmazenador arm = new ArmazenadorLista();
                 return new CadastroAlunos(arm);

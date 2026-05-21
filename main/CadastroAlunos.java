@@ -11,8 +11,8 @@ import storage.CadastroCheioException;
 /**
  * Fachada que expoe as operacoes de cadastro de alunos delegando ao
  * armazenador subjacente. A estrutura de dados e injetada por construtor,
- * permitindo trocar entre vetor (capacidade fixa) e ArrayList (elastica)
- * sem alterar o restante do sistema.
+ * permitindo trocar entre vetor (capacidade fixa) e lista ligada (elastica)
+ * sem alterar a interface usada pelo restante do sistema.
  *
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
  * @version 1.1 2026/04/27
@@ -100,6 +100,7 @@ public class CadastroAlunos {
      * Salva o cadastro em um arquivo binario.
      *
      * @param nomeArq Caminho completo do arquivo de destino.
+     * @throws IOException se ocorrer erro ao gravar o arquivo.
      */
     public void salvar(String nomeArq) throws IOException {
         arm.salvar(nomeArq);
@@ -110,6 +111,8 @@ public class CadastroAlunos {
      * dados em memoria.
      *
      * @param nomeArq Caminho completo do arquivo de origem.
+     * @throws IOException se ocorrer erro ao ler o arquivo ou se o formato for invalido.
+     * @throws ClassNotFoundException se a classe dos objetos gravados nao for encontrada.
      */
     public void carregar(String nomeArq) throws IOException, ClassNotFoundException {
         arm.carregar(nomeArq);

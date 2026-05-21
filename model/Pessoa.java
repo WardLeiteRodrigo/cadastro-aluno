@@ -1,17 +1,20 @@
+package model;
+
+import java.io.Serializable;
+
 /**
  * Classe que representa uma pessoa com nome e idade.
  * 
  * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
  * @version 1.0 2026/04/07
  */
-package model;
-
-import java.io.Serializable;
-
 public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Nome da pessoa, encapsulado em objeto especializado para formatacao. */
     private NomePessoa nome;
+
+    /** Idade da pessoa em anos. */
     private int idade;
 
     /**

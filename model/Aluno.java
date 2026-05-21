@@ -27,9 +27,13 @@ public class Aluno extends Pessoa {
     /** Semestre maximo permitido para um aluno. */
     public static final int SEMESTRE_MAX = 12;
 
-    // Atributos especificos do aluno (encapsulados)
+    /** Registro academico unico do aluno. */
     private String ra;
+
+    /** Curso em que o aluno esta matriculado. */
     private String curso;
+
+    /** Semestre atual do aluno no curso. */
     private int semestre;
 
     /**
