@@ -25,9 +25,19 @@ import storage.CadastroCheioException;
  */
 public class TestaCadastro {
 
+    /** Contador de asserções que passaram durante a execução das baterias. */
     private static int passou = 0;
+    /** Contador de asserções que falharam durante a execução das baterias. */
     private static int falhou = 0;
 
+    /**
+     * Registra o resultado de uma asserção, atualizando os contadores
+     * {@link #passou} ou {@link #falhou} e imprimindo o desfecho no console.
+     *
+     * @param nome     Descricao curta do caso de teste sendo verificado.
+     * @param condicao Resultado da asserção: {@code true} para sucesso,
+     *                 {@code false} para falha.
+     */
     private static void verificar(String nome, boolean condicao) {
         if (condicao) {
             passou++;
@@ -38,6 +48,14 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Fabrica um {@link Aluno} valido pronto para uso nos testes, evitando
+     * repeticao dos blocos try/catch em cada caso. Usa dados ficticios e
+     * apenas varia o RA fornecido.
+     *
+     * @param ra RA a ser atribuido ao aluno de teste.
+     * @return Aluno valido com nome, idade, curso e semestre padrao.
+     */
     private static Aluno criar(String ra) {
         try {
             return new Aluno("Fulano de Tal", 25, ra, "Computacao", 3);
@@ -56,6 +74,12 @@ public class TestaCadastro {
         CadastroAlunos novo(int qtde);
     }
 
+    /**
+     * Verifica que a insercao de um aluno valido grava o registro no
+     * cadastro (consulta {@link CadastroAlunos#existe(String)} apos inserir).
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testInserirOk(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -66,6 +90,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que inserir um aluno com RA ja existente lanca
+     * {@link RaDuplicadoException}.
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testInserirDuplicado(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -79,6 +109,13 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que inserir alem da capacidade de uma estrutura de tamanho
+     * fixo (vetor) lanca {@link CadastroCheioException}. Aplicavel apenas
+     * ao {@link Armazenador} (a lista e elastica).
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testCadastroCheio(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(2);
         try {
@@ -93,6 +130,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que a remocao de um aluno existente retira efetivamente o
+     * registro do cadastro.
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testRemoverOk(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -104,6 +147,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que tentar remover um RA inexistente lanca
+     * {@link RaInexistenteException}.
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testRemoverInexistente(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -114,6 +163,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que a atualizacao de um aluno existente substitui os dados
+     * antigos pelos novos (confirmado via {@link CadastroAlunos#listar(boolean)}).
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testAtualizarOk(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -127,6 +182,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que tentar atualizar um RA inexistente lanca
+     * {@link RaInexistenteException}.
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testAtualizarInexistente(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -139,6 +200,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que valores de idade fora do intervalo permitido
+     * ({@link Aluno#IDADE_MIN} a {@link Aluno#IDADE_MAX}) provocam
+     * {@link IdadeInvalidaException} na construcao do aluno. Testa tanto
+     * idade negativa quanto idade acima do limite superior.
+     */
     private static void testIdadeInvalida() {
         try {
             new Aluno("Negativo", -1, "RA1", "Curso", 1);
@@ -159,6 +226,11 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica que valores de semestre fora do intervalo permitido
+     * ({@link Aluno#SEMESTRE_MIN} a {@link Aluno#SEMESTRE_MAX}) provocam
+     * {@link SemestreInvalidoException} na construcao do aluno.
+     */
     private static void testSemestreInvalido() {
         try {
             new Aluno("Fulano", 20, "RA1", "Curso", 0);
@@ -179,6 +251,12 @@ public class TestaCadastro {
         }
     }
 
+    /**
+     * Verifica a listagem do cadastro nos dois formatos (comum e
+     * bibliografico) e tambem a mensagem retornada para um cadastro vazio.
+     *
+     * @param fab Fabrica de cadastros usada para criar a instancia sob teste.
+     */
     private static void testListar(FabricaCadastro fab) {
         CadastroAlunos ca = fab.novo(3);
         try {
@@ -218,6 +296,15 @@ public class TestaCadastro {
         testListar(fab);
     }
 
+    /**
+     * Ponto de entrada dos testes manuais. Executa primeiro a validacao do
+     * modelo (idade e semestre) e em seguida roda a bateria completa contra
+     * as duas implementacoes de {@link IArmazenador}: {@link Armazenador}
+     * (vetor) e {@link ArmazenadorLista} (lista ligada). Ao final, imprime
+     * o total de asserções que passaram e falharam.
+     *
+     * @param args Argumentos de linha de comando (nao utilizados).
+     */
     public static void main(String[] args) {
         System.out.println("=== TestaCadastro ===");
 

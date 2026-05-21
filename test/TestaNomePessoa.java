@@ -1,13 +1,23 @@
-/**
- * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward 
- * @version 19/03/2026
- */
 package test;
 
 import model.NomePessoa;
 import javax.swing.JOptionPane;
 
+/**
+ * Teste manual da classe {@link NomePessoa}: solicita um nome ao usuario
+ * via {@link JOptionPane} e imprime no console o nome original (com
+ * quantidade de palavras), sua versao invertida e o formato bibliografico.
+ *
+ * @author Kaua Bezerra, Liam Vedovato, Raul Kolaric, Rodrigo Ward
+ * @version 1.0 2026/03/19
+ */
 public class TestaNomePessoa {
+    /**
+     * Ponto de entrada do teste manual. Le um nome digitado pelo usuario e
+     * exibe no console as variacoes geradas por {@link NomePessoa}.
+     *
+     * @param args Argumentos de linha de comando (nao utilizados).
+     */
     public static void main(String[] args) {
         String nomePessoa = JOptionPane.showInputDialog("Forneça um nome: ");
 

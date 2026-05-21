@@ -30,18 +30,45 @@ public class CadastroAlunos {
         this.arm = arm;
     }
 
+    /**
+     * Insere um novo aluno no cadastro, delegando ao armazenador subjacente.
+     *
+     * @param a O aluno a ser inserido.
+     * @throws RaDuplicadoException   se ja existir um aluno com o mesmo RA.
+     * @throws CadastroCheioException se a estrutura ja estiver na capacidade maxima.
+     */
     public void inserir(Aluno a) throws RaDuplicadoException, CadastroCheioException {
         arm.inserir(a);
     }
 
+    /**
+     * Remove do cadastro o aluno cujo RA foi informado.
+     *
+     * @param ra RA do aluno a ser removido.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
+     */
     public void remover(String ra) throws RaInexistenteException {
         arm.remover(ra);
     }
 
+    /**
+     * Atualiza os dados do aluno identificado pelo RA, substituindo seu
+     * registro pelo novo aluno fornecido.
+     *
+     * @param ra        RA do aluno a ser atualizado.
+     * @param novoAluno Novo objeto Aluno que substituira o registro atual.
+     * @throws RaInexistenteException se nao existir aluno com o RA informado.
+     */
     public void atualizar(String ra, Aluno novoAluno) throws RaInexistenteException {
         arm.atualizar(ra, novoAluno);
     }
 
+    /**
+     * Verifica se existe um aluno cadastrado com o RA informado.
+     *
+     * @param ra RA a ser consultado.
+     * @return {@code true} se o aluno existir no cadastro, {@code false} caso contrario.
+     */
     public boolean existe(String ra) {
         return arm.existe(ra);
     }
@@ -56,6 +83,15 @@ public class CadastroAlunos {
         return arm.buscar(ra);
     }
 
+    /**
+     * Gera uma listagem textual de todos os alunos cadastrados.
+     *
+     * @param formatoBibliografico Se {@code true}, os nomes sao exibidos no
+     *                             formato bibliografico (ex.: SILVA, J. M.);
+     *                             se {@code false}, no formato comum.
+     * @return String contendo a lista formatada, ou mensagem indicando
+     *         cadastro vazio quando nao houver alunos.
+     */
     public String listar(boolean formatoBibliografico) {
         return arm.listar(formatoBibliografico);
     }
